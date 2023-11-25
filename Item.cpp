@@ -1,7 +1,9 @@
 #include "Item.h"
+#include <iomanip>
+#include <sstream>
 
 // Constructor
-Item::Item(int icalories, string iname, float iprice)
+Item::Item(int icalories, std::string iname, float iprice)
 {
 	calories = icalories;
 	name = iname;
@@ -14,12 +16,13 @@ Item::~Item()
 	
 }
 
+// Get functions
 int Item::getCalories()
 {
 	return calories;
 }
 
-string Item::getName()
+std::string Item::getName()
 {
 	return name;
 }
@@ -29,8 +32,14 @@ float Item::getPrice()
 	return price;
 }
 
-string Item::toString()
+std::string Item::toString()
 {
-	// Prtints out info for the individual item - used for the order / receipt
-	return "";
+	// Prints out info for the individual item - used for the order / receipt
+
+	//std::string output = name + ": \u00A3" + std::to_string(price) + ", " + std::to_string(calories) + " cal ";
+
+	// Creates the string and also ensures that it outputs with 2 decimal places only
+	std::string output = name + ": \u00A3" + (std::ostringstream() << std::fixed << std::setprecision(2) << price).str() + ", " + std::to_string(calories) + " cal ";
+
+	return output;
 }

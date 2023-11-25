@@ -5,12 +5,12 @@
 class Beverage : public Item
 {
 public:
-	Beverage();
+	Beverage(int icalories, std::string iname, float iprice, int ivolume, float iabv);
 	~Beverage();
-	string toString();
-	void isAlcoholic();
+	std::string toString();
+	bool isAlcoholic() const;
 
-	// Get functions
+	// Get functions PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
 	int getVolume();
 	float getAbv();
 
@@ -19,9 +19,4 @@ private:
 	float abv;
 };
 
-string Beverage::toString()
-{
-	// Overload for the beverage
-	// Calls the parents method and then add to that strng with beverage specific stuff
-	return "";
-}
+

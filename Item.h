@@ -1,9 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <cstring>
-
-using namespace std;
+#include <string>
 
 // Do I need: destructors, copy constructors? YES
 // Do these need to be split into seperate header files? Simple fix but is it requried YES IT DOES FIX IT
@@ -12,18 +10,18 @@ using namespace std;
 class Item
 {
 public:
-	Item(int icalories, string iname, float iprice);
+	Item(int icalories, std::string iname, float iprice);
 	~Item();
-	string toString();
+	std::string toString();
 
-	// Functions to get variables
+	// Functions to get variables PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
 	int getCalories();
-	string getName();
+	std::string getName();
 	float getPrice();
 
 // Protected variables that can only be accessed by child classes
 protected:
 	int calories;
-	string name;
+	std::string name;
 	float price;
 };

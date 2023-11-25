@@ -6,12 +6,12 @@ class Appetiser : public Item
 {
 public:
 	// Constructor
-	Appetiser(int icalories, string iname, float iprice, bool ishareable, bool itwoForOne);
+	Appetiser(int icalories, std::string iname, float iprice, bool ishareable, bool itwoForOne);
 	~Appetiser();
 
-	string toString();
+	std::string toString();
 
-	// Get functions
+	// Get functions PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
 	bool getShareable();
 	bool getTwoForOne();
 
