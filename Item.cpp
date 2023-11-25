@@ -39,7 +39,7 @@ std::string Item::toString()
 	//std::string output = name + ": \u00A3" + std::to_string(price) + ", " + std::to_string(calories) + " cal ";
 
 	// Creates the string and also ensures that it outputs with 2 decimal places only
-	std::string output = name + ": \u00A3" + (std::ostringstream() << std::fixed << std::setprecision(2) << price).str() + ", " + std::to_string(calories) + " cal ";
+	std::string output = name + ": \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << price).str() + ", " + std::to_string(calories) + " cal ";
 
 	return output;
 }
