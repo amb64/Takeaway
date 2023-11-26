@@ -1,7 +1,7 @@
 #include "Appetiser.h"
 
 // Constructor 
-Appetiser::Appetiser(int icalories, std::string iname, float iprice, bool ishareable, bool itwoForOne) : Item(icalories, iname, iprice)
+Appetiser::Appetiser(int icalories, std::string iname, double iprice, bool ishareable, bool itwoForOne) : Item(icalories, iname, iprice)
 {
 	// First call the parent constructor, then initialise Appetiser class specific parameters
 	shareable = ishareable;

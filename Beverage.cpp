@@ -3,7 +3,7 @@
 #include <sstream>
 
 // Constructor
-Beverage::Beverage(int icalories, std::string iname, float iprice, int ivolume, float iabv) : Item(icalories, iname, iprice)
+Beverage::Beverage(int icalories, std::string iname, double iprice, int ivolume, double iabv) : Item(icalories, iname, iprice)
 {
 	// First call the parent constructor, then initialise Beverage class specific parameters
 	volume = ivolume;
@@ -36,7 +36,7 @@ int Beverage::getVolume()
 	return volume;
 }
 
-float Beverage::getAbv()
+double Beverage::getAbv()
 {
 	return abv;
 }

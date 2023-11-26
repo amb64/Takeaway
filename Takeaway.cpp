@@ -29,7 +29,8 @@ int main()
 	cout << app->getTwoForOne();*/
 
 	Menu menu = Menu("menu.csv");
-
+	std::string output = menu.toString();
+	//std::cout << output;
 
 	/*string userCommand;
 	vector <string> parameters;

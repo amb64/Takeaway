@@ -1,7 +1,7 @@
 #include "MainCourse.h"
 
 // Constructor
-MainCourse::MainCourse(int icalories, std::string iname, float iprice) : Item(icalories, iname, iprice)
+MainCourse::MainCourse(int icalories, std::string iname, double iprice) : Item(icalories, iname, iprice)
 {
 	// No extra parameters need to be initialised for a MainCourse object
 }

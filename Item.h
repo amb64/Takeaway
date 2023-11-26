@@ -10,18 +10,18 @@
 class Item
 {
 public:
-	Item(int icalories, std::string iname, float iprice);
+	Item(int icalories, std::string iname, double iprice);
 	~Item();
 	std::string toString();
 
 	// Functions to get variables PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
 	int getCalories();
 	std::string getName();
-	float getPrice();
+	double getPrice();
 
 // Protected variables that can only be accessed by child classes
 protected:
 	int calories;
 	std::string name;
-	float price;
+	double price;
 };

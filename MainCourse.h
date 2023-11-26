@@ -5,7 +5,7 @@
 class MainCourse : public Item
 {
 public:
-	MainCourse(int icalories, std::string iname, float iprice);
+	MainCourse(int icalories, std::string iname, double iprice);
 	~MainCourse();
 
 	// Additional implementation of toString to fix spacing / new line issues in the output.

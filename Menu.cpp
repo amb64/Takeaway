@@ -53,7 +53,7 @@ void Menu::loadFile()
 			// Setting shared variables
 			const std::string itemType = item[0];
 			std::string itemName = item[1];
-			float price = stof(item[2]);
+			double price = stod(item[2]);
 			int calories = stoi(item[3]);
 			
 			if (itemType == "a")
@@ -85,8 +85,8 @@ void Menu::loadFile()
 				items.push_back(a);
 
 				//Testing
-				std::string output = a->toString();
-				std::cout << output;
+				/*std::string output = a->toString();
+				std::cout << output;*/
 
 				delete a;
 			}
@@ -97,23 +97,23 @@ void Menu::loadFile()
 				items.push_back(a);
 
 				//Testing
-				std::string output = a->toString();
-				std::cout << output;
+				/*std::string output = a->toString();
+				std::cout << output;*/
 
 				delete a;
 			}
 			else if (itemType == "b")
 			{
 				int volume = stoi(item[4]);
-				float abv = stof(item[5]);
+				double abv = stod(item[5]);
 
 				Beverage* a;
 				a = new Beverage(calories, itemName, price, volume, abv);
 				items.push_back(a);
 
 				//Testing
-				std::string output = a->toString();
-				std::cout << output;
+				/*std::string output = a->toString();
+				std::cout << output;*/
 
 				delete a;
 			}
@@ -145,5 +145,35 @@ std::string Menu::toString()
 	// Organised by item type.
 	// See brief for specifics
 
-	return "";
+	std::string output;
+	int counter = 0;
+	Item* previousItem;
+
+	//output = output + "----------Appetisers----------";
+	std::cout << "----------Appetisers----------\n";
+
+	// Loop that goes through the list of items. When it hits an item with a type different to the previous item, check whether the new item is a main course or beverage.
+	// Then it displays the next message and continues through the loop.
+	// This is done under the assumption that the menu.csv file will always be ordered appetisers -> main courses -> beverages
+
+	for (auto i : items)
+	{
+		if (typeid(i) != typeid(previousItem) && typeid(i) == typeid(MainCourse))
+		{
+			//output = output + "----------Main Dishes----------\n";
+			std::cout << "----------Main Dishes----------\n";
+		}
+		else if (typeid(i) != typeid(previousItem) && typeid(i) == typeid(Beverage))
+		{
+			//output = output + "----------Beverages----------\n";
+			std::cout << "----------Beverages----------\n";
+		}
+
+		//output = output + std::to_string(counter) + i->toString() + "\n";
+		std::cout << std::to_string(counter) + i->toString() + "\n";
+		previousItem = i;
+		counter++;
+	}
+
+	return output;
 }

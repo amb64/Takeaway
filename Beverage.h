@@ -5,18 +5,18 @@
 class Beverage : public Item
 {
 public:
-	Beverage(int icalories, std::string iname, float iprice, int ivolume, float iabv);
+	Beverage(int icalories, std::string iname, double iprice, int ivolume, double iabv);
 	~Beverage();
 	std::string toString();
 	bool isAlcoholic() const;
 
 	// Get functions PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
 	int getVolume();
-	float getAbv();
+	double getAbv();
 
 private:
 	int volume;
-	float abv;
+	double abv;
 };
 
 
