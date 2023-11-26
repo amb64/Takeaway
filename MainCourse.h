@@ -5,8 +5,9 @@
 class MainCourse : public Item
 {
 public:
-	MainCourse();
+	MainCourse(int icalories, std::string iname, double iprice);
 	~MainCourse();
-	// toString isnt specified in the diagram- does this mean it needs to use the base one or what? YES BASE ONE
 
+	// Additional implementation of toString to fix spacing / new line issues in the output.
+	std::string toString() override;
 };

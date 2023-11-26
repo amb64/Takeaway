@@ -7,12 +7,12 @@
 class Menu : public ItemList
 {
 public:
-	Menu(string filePath);
+	Menu(std::string filePath);
 	void loadFile();
-	string toString();
+	std::string toString();
 
 private:
-	string filePath;
+	std::string filePath;
 };
 
 // Additional functionality : add the ability to sort by ascending or descending menu

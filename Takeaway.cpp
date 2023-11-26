@@ -17,6 +17,7 @@ Good luck!
 #include "Order.h"
 #include "Item.h"
 
+
 int main()
 {
 	//TEMPORARY TESTING COMMANDS
@@ -28,7 +29,8 @@ int main()
 	cout << app->getTwoForOne();*/
 
 	Menu menu = Menu("menu.csv");
-
+	std::string output = menu.toString();
+	std::cout << output;
 
 	/*string userCommand;
 	vector <string> parameters;

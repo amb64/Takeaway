@@ -1,12 +1,9 @@
 #include "Appetiser.h"
 
 // Constructor 
-Appetiser::Appetiser(int icalories, string iname, float iprice, bool ishareable, bool itwoForOne)
+Appetiser::Appetiser(int icalories, std::string iname, double iprice, bool ishareable, bool itwoForOne) : Item(icalories, iname, iprice)
 {
-	// To fix the error: call the default constructor here and then initialise appetiser specific variables afterwards
-	calories = icalories;
-	name = iname;
-	price = iprice;
+	// First call the parent constructor, then initialise Appetiser class specific parameters
 	shareable = ishareable;
 	twoForOne = itwoForOne;
 }
@@ -17,6 +14,7 @@ Appetiser::~Appetiser()
 
 }
 
+// Get functions
 bool Appetiser::getShareable()
 {
 	return shareable;
@@ -27,9 +25,16 @@ bool Appetiser::getTwoForOne()
 	return twoForOne;
 }
 
-string Appetiser::toString()
+// Returns a string of the item
+std::string Appetiser::toString()
 {
-	// Overload for the appetiser
-	// Call the parent's method and then add to that string with the appetiser specific ones 
-	return "";
+	// Override for the appetiser
+	std::string output = Item::toString();
+
+	std::string shareableString = (shareable ? "(shareable)" : "");
+	std::string twoForOneString = (twoForOne ? "(2-4-1)" : "");
+
+	output = output + shareableString + twoForOneString + "\n";
+
+	return output;
 }

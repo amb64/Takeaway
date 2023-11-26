@@ -1,7 +1,20 @@
 #include "Order.h"
 
+// Constructor
+Order::Order()
+{
+	savings = 0;
+	total = 0;
+}
+
+// Destructor
+Order::~Order()
+{
+
+}
+
 // Function that gets the private variable total.
-float Order::getTotal()
+double Order::getTotal()
 {
 	return total;
 }
@@ -36,7 +49,7 @@ void Order::checkTwoForOne()
 	// If true, calculate the savings (compare the price attribute, the smaller one is then considered the savings amount)
 }
 
-string Order::toString()
+std::string Order::toString()
 {
 	// Outputs the order nice and pretty
 	// Must include the total price, and the savings made

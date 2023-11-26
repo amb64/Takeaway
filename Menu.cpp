@@ -1,7 +1,11 @@
 #include "Menu.h"
+#include "Item.h"
+#include "Appetiser.h"
+#include "MainCourse.h"
+#include "Beverage.h"
 
 // Constructor that takes the file path passed in and sets it as the filepath variable in the class. Then calls the function to load the file
-Menu::Menu(string ifilePath)
+Menu::Menu(std::string ifilePath)
 {
 	filePath = ifilePath;
 	loadFile();
@@ -9,23 +13,23 @@ Menu::Menu(string ifilePath)
 
 void Menu::loadFile()
 {
-	ifstream file(filePath, ios::in); // Opening the file
-	string line; // The curent line being checked (entry in the csv file)
+	std::ifstream file(filePath, std::ios::in); // Opening the file
+	std::string line; // The curent line being checked (entry in the csv file)
 	
-	vector<string> itemList; // Vector to store the current menu item's info
-	vector<vector<string>> menuList; // 2D vector to store all menu item info
+	std::vector<std::string> itemList; // Vector to store the current menu item's info
+	std::vector<std::vector<std::string>> menuList; // 2D vector to store all menu item info
 
 	if (file.is_open())
 	{
 		while (getline(file, line)) // Checking each line 
 		{
-			stringstream ss(line);
-			string item; // The current string being checked
+			std::stringstream ss(line);
+			std::string item; // The current string being checked
 
 			while (getline(ss, item, ',')) // Checking the current string
 			{
 				// If the string is not empty then add it into the list for the current menu item
-				if (!item.empty() && item.find_first_not_of(" ") != string::npos)
+				if (!item.empty() && item.find_first_not_of(" ") != std::string::npos)
 				{
 					itemList.push_back(item);
 				}
@@ -41,15 +45,15 @@ void Menu::loadFile()
 			// Adding the data for the current menu item into the 2d vector
 			menuList.push_back(itemList);
 			// Using a temporary vector to clear and release the old vector from memory
-			vector<string>().swap(itemList); 
+			std::vector<std::string>().swap(itemList);
 		}
 
 		for (const auto& item : menuList)
 		{
 			// Setting shared variables
-			const string itemType = item[0];
-			string itemName = item[1];
-			float price = stof(item[2]);
+			const std::string itemType = item[0];
+			std::string itemName = item[1];
+			double price = stod(item[2]);
 			int calories = stoi(item[3]);
 			
 			if (itemType == "a")
@@ -79,19 +83,46 @@ void Menu::loadFile()
 				Appetiser* a;
 				a = new Appetiser(calories, itemName, price, isShareable, isTwoForOne);
 				items.push_back(a);
-				delete a;
+
+				//Testing
+				/*std::string output = a->toString();
+				std::cout << output;*/
+
+				//delete a;
 			}
 			else if (itemType == "m")
 			{
+				MainCourse* a;
+				a = new MainCourse(calories, itemName, price);
+				items.push_back(a);
 
+				//Testing
+				/*std::string output = a->toString();
+				std::cout << output;*/
+
+				//delete a;
 			}
 			else if (itemType == "b")
 			{
+				int volume = stoi(item[4]);
+				double abv = stod(item[5]);
 
+				Beverage* a;
+				a = new Beverage(calories, itemName, price, volume, abv);
+				items.push_back(a);
+
+				//Testing
+				/*std::string output = a->toString();
+				std::cout << output;*/
+
+				//delete a;
 			}
-
-
 		}
+
+		file.close();
+
+		//std::cout << items[0]->toString();
+		//std::cout << items[0]->getName();
 
 		/*for (auto i : menuList)
 		{
@@ -112,11 +143,44 @@ void Menu::loadFile()
 	// When done reading from the file, close it and delete the variable for the file as well as the list used
 }
 
-string Menu::toString()
+std::string Menu::toString()
 {
 	// Function that displays the menu nicely when printed out on the screen.
 	// Organised by item type.
 	// See brief for specifics
 
-	return "";
+	std::string output;
+	//int counter = 1;
+	Item* previousItem = nullptr;
+
+	//output = output + "----------Appetisers----------";
+	output+= "----------Appetisers----------\n";
+
+	// Loop that goes through the list of items. When it hits an item with a type different to the previous item, check whether the new item is a main course or beverage.
+	// Then it displays the next message and continues through the loop.
+	// This is done under the assumption that the menu.csv file will always be ordered appetisers -> main courses -> beverages
+
+	//std::cout << items[0]->toString();
+
+	for (size_t i = 0; i < items.size(); i++)
+	{
+		if (i > 0 && typeid(*items[i]) != typeid(*previousItem))
+		{
+			if (typeid(*items[i]) == typeid(MainCourse))
+			{
+				output += "----------Main Dishes----------\n";
+			}
+			else if (typeid(*items[i]) == typeid(Beverage))
+			{
+				output += "----------Beverages----------\n";
+			}
+		}
+
+		//output = output + std::to_string(counter) + i->toString() + "\n";
+		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString();
+		previousItem = items[i];
+		//counter++;
+	}
+
+	return output;
 }
