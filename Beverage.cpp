@@ -1,6 +1,4 @@
 #include "Beverage.h"
-#include <iomanip>
-#include <sstream>
 
 // Constructor
 Beverage::Beverage(int icalories, std::string iname, double iprice, int ivolume, double iabv) : Item(icalories, iname, iprice)
@@ -44,21 +42,23 @@ double Beverage::getAbv()
 std::string Beverage::toString()
 {
 	// Override for the beverage
+	// First calls base method
 	std::string output = Item::toString();
 
+	// Adds the volume
 	output = output + "(" + std::to_string(volume) + "ml";
 
 	if (Beverage::isAlcoholic())
 	{
-		//output = output + "," + std::to_string(abv) + "% abv)\n";
-
 		// Creates the string and also ensures that it outputs with 1 decimal place only
 		output = output + ", " + (std::ostringstream() << std::fixed << std::setprecision(1) << abv).str() + "% abv)\n";
 	}
 	else
 	{
+		// Closes the bracket for the volume
 		output = output + ")\n";
 	}
 	
+	// Returns the string
 	return output;
 }

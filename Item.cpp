@@ -38,8 +38,6 @@ std::string Item::toString()
 
 	// Prints out info for the individual item - used for the order / receipt
 
-	//std::string output = name + ": \u00A3" + std::to_string(price) + ", " + std::to_string(calories) + " cal ";
-
 	// Creates the string and also ensures that it outputs with 2 decimal places only
 	output = name + ": \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << price).str() + ", " + std::to_string(calories) + " cal ";
 
@@ -50,5 +48,6 @@ std::string Item::toString()
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}*/
 
+	// Returns the string
 	return output;
 }

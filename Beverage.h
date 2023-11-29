@@ -1,5 +1,7 @@
 #pragma once
 #include "Item.h"
+#include <iomanip>
+#include <sstream>
 
 // Beverage class
 class Beverage : public Item

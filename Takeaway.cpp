@@ -17,6 +17,11 @@ Good luck!
 #include "Order.h"
 #include "Item.h"
 
+#include <iostream>
+#include <vector>
+#include <cstring>
+
+using namespace std;
 
 int main()
 {
@@ -28,9 +33,61 @@ int main()
 	items.push_back(app);
 	cout << app->getTwoForOne();*/
 
-	Menu menu = Menu("menu.csv");
-	std::string output = menu.toString();
-	std::cout << output;
+	//Menu menu = Menu("menu.csv");
+	Menu menu = Menu("menu2.csv");
+	Order order = Order(menu);
+
+	string output = menu.toString();
+	cout << output;
+
+	cout << "\nenter item to add\n";
+	int itemid;
+	cin >> itemid;
+	order.add(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	cout << "\nenter item to remove\n";
+	cin >> itemid;
+	order.remove(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	cout << "\nenter item to add\n";
+	itemid;
+	cin >> itemid;
+	order.add(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	cout << "\nenter item to add\n";
+	itemid;
+	cin >> itemid;
+	order.add(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	cout << "\nenter item to add\n";
+	itemid;
+	cin >> itemid;
+	order.add(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	cout << "\nenter item to add\n";
+	itemid;
+	cin >> itemid;
+	order.add(itemid);
+
+	output = order.toString();
+	cout << output;
+
+	// END PERSONAL TESTING COMMANDS
 
 	/*string userCommand;
 	vector <string> parameters;
@@ -39,7 +96,7 @@ int main()
 	Menu menu = Menu("menu.csv");
 
 	// Create an order object
-	Order order = Order();
+	Order order = Order(menu);
 
 	while (userCommand != "exit")
 	{

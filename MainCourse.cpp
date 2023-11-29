@@ -12,12 +12,16 @@ MainCourse::~MainCourse()
 
 }
 
-// Fixes spacing / new line issues with the other objects. Simply adds a new line to the output
-// Returns a string of the item
+
+
 std::string MainCourse::toString()
 {
+	// Call the base method
 	std::string output = Item::toString();
+
+	// Fixes spacing / new line issues with the other objects. Simply adds a new line to the output
 	output = output + "\n";
 
+	// Returns a string of the item
 	return output;
 }

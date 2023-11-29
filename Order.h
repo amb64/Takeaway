@@ -1,21 +1,29 @@
 #pragma once
 #include "ItemList.h"
+#include "Appetiser.h"
+#include "Beverage.h"
+#include "MainCourse.h"
+#include "Menu.h"
 
 class Order: public ItemList
 {
 public:
-	Order();
+	Order(Menu menu);
 	~Order();
-	void calculateTotal();
 	void printReceipt();
 	void add(int itemNo);
 	void remove(int itemNo);
-	void checkTwoForOne();
+	std::string checkout();
+	
 
 	std::string toString();
 	double getTotal();
 
 private:
+	void checkTwoForOne();
+	void calculateTotal();
+	void calculateSavings(Item* a1, Item* a2);
+
 	std::vector<Item*> orderItems; // Vector that stores pointers to the items specifically added to the order
 	bool twoForOne = false; // Preset to false
 	double total; // Price of all items in the order
