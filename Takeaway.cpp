@@ -32,9 +32,9 @@ int main()
 	vector<Item*> items;
 	items.push_back(app);
 	cout << app->getTwoForOne();*/
-
-	//Menu menu = Menu("menu.csv");
-	Menu menu = Menu("menu2.csv");
+	
+	/*Menu menu = Menu("menu.csv");
+	//Menu menu = Menu("menu2.csv");
 	Order order = Order(menu);
 
 	string output = menu.toString();
@@ -87,9 +87,11 @@ int main()
 	output = order.toString();
 	cout << output;
 
+	order.printReceipt();*/
+
 	// END PERSONAL TESTING COMMANDS
 
-	/*string userCommand;
+	string userCommand;
 	vector <string> parameters;
 
 	// Create a menu object from a CSV file
@@ -97,6 +99,9 @@ int main()
 
 	// Create an order object
 	Order order = Order(menu);
+
+	cout << "==========Takeaway Ordering Program==========\n";
+	cout << "-----Help Commands-----\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n";
 
 	while (userCommand != "exit")
 	{
@@ -120,23 +125,47 @@ int main()
 		}
 		else if (command.compare("add") == 0)
 		{
+			//int choice;;
+
 			Item* choice; // you need to instantiate this using the menu object!
 			order.add(choice);
+
+			cout << "Please enter the number of the item from the menu you would like to add.\nIf you want to add multiple items, split them with a comma like this: 1,2,3\n";
+
+			//cin >> choice;
+			
+
+			cout << order.toString();
+
+			// probably also add in an explanation as to the formatting for how they would input multiple items, split by a comma, a space or whatever
+			// pass the input to the add function, then in the add function split the different inputs so that you can add multiple items
+			// then display the order.tostring
 
 			// You may also wish to implement the ability to add multiple items at once!
 			// e.g. add 1 5 9 
 		}
 		else if (command.compare("remove") == 0)
 		{
+			int choice; 
 
+			cout << "Please enter the number of the item from your order you would like to remove.\nIf you want to remove multiple items, split them with a comma like this: 1,2,3\n";
+
+			cin >> choice;
+			order.add(choice);
+
+			cout << order.toString();
+
+			// same as add but just for the remove function, and only removing 1 at a time
 		}
 		else if (command.compare("checkout") == 0)
 		{
-
+			cout << order.checkout();
+			// ask for user input, y to confirm, n to go back
 		}
 		else if (command.compare("help") == 0)
 		{
-
+			cout << "-----Help Commands-----\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n";
+			// add some dialogue here just to explain 
 		}
 
 		parameters.clear();
@@ -144,6 +173,6 @@ int main()
 	}
 
 	cout << "Press any key to quit...";
-	std::getchar();*/
+	std::getchar();
 
 }

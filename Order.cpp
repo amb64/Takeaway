@@ -7,8 +7,6 @@ Order::Order(Menu menu)
 	// This is because child classes do inherit the parent's member variables, but as menu edits the vector, it isnt reflected in order as order inherits the empty vector.
 	items = menu.getItems();
 
-	//std::cout << "\nOrder.cpp, class constructor, items size is: " << items.size();
-
 	// Variable initilisation
 	savings = 0;
 	total = 0;
@@ -51,7 +49,7 @@ void Order::calculateTotal()
 // ADD ABILITY TO ADD MULTIPLE ITEMS
 void Order::add(int itemNo)
 {
-	//std::cout << "\nOrder.cpp add method, items size is: " << items.size() ;
+	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO ADD MULTIPLE ITEMS IS ADDED 
 
 	// Ensuring the input is in range of the items vector
 	if (itemNo < 1 || itemNo > items.size())
@@ -91,6 +89,8 @@ void Order::add(int itemNo)
 // ADD ABILITY TO REMOVE MULTIPLE ITEMS
 void Order::remove(int itemNo)
 {
+	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO REMOVE MULTIPLE ITEMS IS ADDED 
+	
 	// Ensuring the input is in range of the orderitems vector
 	if (itemNo < 1 || itemNo > orderItems.size())
 	{
@@ -145,7 +145,6 @@ void Order::remove(int itemNo)
 	
 }
 
-// Is passing an Item here okay when they are pointers?
 void Order::checkTwoForOne()
 {
 	// This function works under the assumption that the 2 for 1 deal is only valid once per order.
@@ -209,6 +208,7 @@ void Order::calculateSavings(Item* a1, Item* a2)
 	}
 }
 
+// could do one function for tostring, checkout, based on bool sent to them, or something, as well as the print receipt so we can output £ direcly rather than the ascii character
 std::string Order::toString()
 {
 	// Outputs the order nice and pretty
@@ -238,11 +238,11 @@ std::string Order::toString()
 		// If a 241 discount is applicable, notify the user and adds the savings to the string
 		if (twoForOne == true)
 		{
-			output += "2-4-1 discount applied! Savings: " + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str() + "\n";
+			output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str() + "\n";
 		}
 
 		// Adds their total to the string
-		output += "Total: " + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
+		output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
 	}
 
 	// Returning the string
@@ -270,11 +270,11 @@ std::string Order::checkout()
 	// If a 241 discount is applicable, notify the user and adds the savings to the string
 	if (twoForOne == true)
 	{
-		output += "2-4-1 discount applied! Savings: " + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str();
+		output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str();
 	}
 
 	// Adds their total to the string
-	output += "Total: " + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
+	output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
 
 	// Adds dialogue to the string
 	output += "Do you want to place your order?\nType 'y' to confirm, or 'n' to go back and modify it.\n";
@@ -292,4 +292,10 @@ void Order::printReceipt()
 
 	// Calling to string. Doing this instead of checkout as checkout includes additional changes
 	std::string output = toString();
+
+	std::ofstream out("receipt.txt");
+	out << output;
+	out.close();
+
+	std::cout << "\nYour receipt has been successfully saved to file 'receipt.txt'!\n";
 }

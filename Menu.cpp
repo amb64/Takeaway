@@ -171,8 +171,6 @@ void Menu::loadFile()
 // NEED TO BE ABLE TO SORT MENU IN ASCENDING AND DESCENDING ORDER
 std::string Menu::toString()
 {
-	//std::cout << "\nMenu.cpp in tostring, items size is: " << items.size();
-
 	// Function that displays the menu nicely when printed out on the screen.
 	// Organised by item type.
 	// See brief for specifics
@@ -203,7 +201,7 @@ std::string Menu::toString()
 			}
 		}
 
-		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString();
+		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString() + "\n";
 		previousItem = items[i];
 	}
 

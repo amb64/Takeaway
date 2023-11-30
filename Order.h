@@ -14,8 +14,6 @@ public:
 	void add(int itemNo);
 	void remove(int itemNo);
 	std::string checkout();
-	
-
 	std::string toString();
 	double getTotal();
 
