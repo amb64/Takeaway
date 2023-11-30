@@ -127,6 +127,12 @@ int main()
 		{
 			//int choice;;
 
+			// Possibly this means that instead of using the index directly in the add function,
+			// I need to move this functionality to this main program
+			// So the user inputs an int, and then this main function could call order.getItem()
+			// Which is a new function that will get the pointer of the item using the item index the user inputs
+			// And then it will use that item index to add the object to the order using order.add()
+
 			Item* choice; // you need to instantiate this using the menu object!
 			order.add(choice);
 
