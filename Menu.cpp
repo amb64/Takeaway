@@ -20,17 +20,22 @@ std::vector<Item*> Menu::getItems()
 }
 
 // Returns a pointer to an item object based on an inputted integer
-Item* Menu::getItem(int index)
+Item* Menu::getItem(int index, bool isRemoving, int orderItemsSize)
 {
-	std::cout << "\ncalled get item\n";
+	//std::cout << "\ncalled get item\n";
 
 	Item* item;
 
-	if (index < 1 || index > items.size())
+	// If:
+	// The index is less than 1
+	// If the user is adding and the index is larger than the size of the items vector
+	// If the user is removing and the index is larger than the orderItems vector
+	// Then there is an error in the input
+	if (index < 1 || (!isRemoving && index > items.size()) || (isRemoving && index > orderItemsSize))
 	{
-		std::cout << "Invalid item number.\nPlease type either 'add' or 'remove' and input an item number again.";
+		std::cout << "\n-----\nOops!\nOne or more of your inputted numbers was invalid.\nPlease type either 'add' or 'remove' and input an item number again.\nPlease note: any valid items have been added / removed.\n-----\n\n";
 
-		std::cout << "\nreturning null ptr\n";
+		//std::cout << "\nreturning null ptr\n";
 		return nullptr;
 	}
 	else
@@ -40,9 +45,9 @@ Item* Menu::getItem(int index)
 
 		item = items[index];
 
-		std::cout << items[index];
+		//std::cout << items[index];
 
-		std::cout << "\nreturning item pointer\n";
+		//std::cout << "\nreturning item pointer\n";
 		return item;
 	}
 }
@@ -210,7 +215,7 @@ std::string Menu::toString()
 	// Variable that helps to seperate the different item types in the output
 	Item* previousItem = nullptr;
 
-	output+= "----------Appetisers----------\n";
+	output+= "\n----------Appetisers----------\n";
 
 	// Loop that goes through the list of items. When it hits an item with a type different to the previous item, check whether the new item is a main course or beverage.
 	// Then it displays the next message and continues through the loop.
@@ -233,6 +238,8 @@ std::string Menu::toString()
 		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString();
 		previousItem = items[i];
 	}
+
+	output += "\n\n";
 
 	// Returning the string
 	return output;

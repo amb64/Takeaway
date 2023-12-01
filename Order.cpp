@@ -24,9 +24,15 @@ double Order::getTotal() const
 	return total;
 }
 
+// Returns the size of orderItems
+int Order::getOrderItemsSize()
+{
+	return orderItems.size();
+}
+
 void Order::calculateTotal()
 {
-	std::cout << "\ncalled calculate total\n";
+	//std::cout << "\ncalled calculate total\n";
 
 	// Declaring variable to hold the total while it is being calculated
 	double totalCalc = 0; 
@@ -51,15 +57,15 @@ void Order::calculateTotal()
 // ADD ABILITY TO ADD MULTIPLE ITEMS
 void Order::add(Item* item)
 {
-	std::cout << "\ncalled order.add\n";
-	std::cout << item << std::endl;
+	//std::cout << "\ncalled order.add\n";
+	//std::cout << item << std::endl;
 
 	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO ADD MULTIPLE ITEMS IS ADDED 
 
 	// Adding the item to the order vector
 	orderItems.push_back(item);
 
-	std::cout << orderItems[0] << std::endl;
+	//std::cout << orderItems[0] << std::endl;
 
 	// Will check for the 2 for 1 deal if the item being added is an appetiser
 	if (typeid(*item) == typeid(Appetiser))
@@ -84,17 +90,17 @@ void Order::add(Item* item)
 }
 
 // ADD ABILITY TO REMOVE MULTIPLE ITEMS
-void Order::remove(Item* item, bool first)
+void Order::remove(Item* item)
 {
 	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO REMOVE MULTIPLE ITEMS IS ADDED 
 	
 	// Checks if itemNo inputted is 1. If it is, we just remove the first element in the list. 
-	// Without this check, the program would crash whenever someone tried to remove the first item in the orderlist.
-	if (first == true)
+	// Without this check, the program would crash whenever someone tried to remove the first item in the orderitems vector.
+	/*if (first == true)
 	{
 		orderItems.erase(orderItems.begin());
-	}
-	else
+	}*/
+	//else
 	{
 		// Find the pointer in the vector using an iterator, and then remove it
 		auto it = std::find(orderItems.begin(), orderItems.end(), item);
@@ -136,15 +142,16 @@ void Order::remove(Item* item, bool first)
 
 void Order::checkTwoForOne()
 {
-	std::cout << "\ncalled checktwoforone\n";
+	//std::cout << "\ncalled checktwoforone\n";
 
 	// This function works under the assumption that the 2 for 1 deal is only valid once per order.
 
 	// Stores the amount of appetisers
 	int appetiserCount = 0; 
-
+	
 	// This is done before the loop to ensure that if two appetisers are not found, no discount is applied.
 	twoForOne = false; 
+	savings = 0;
 
 	// Storing pointers to the two appetisers
 	Item* a1 = nullptr;
@@ -154,30 +161,40 @@ void Order::checkTwoForOne()
 	for (size_t i = 0; i < orderItems.size(); i++) 
 	{
 
-		// Check if the item being checked is an appetiser. If it is, increment the counter
-		if (typeid(*orderItems[i]) == typeid(Appetiser)) 
+		Appetiser* currentApp = dynamic_cast<Appetiser*>(orderItems[i]);
+		if (currentApp) // Check if dynamic_cast succeeded (i.e., it's an Appetiser)
 		{
 			// Storing these appetisers as we need them to calculate the savings
 			if (a1 == nullptr)
 			{
-				a1 = orderItems[i];
+				a1 = currentApp;
 			}
 			else
 			{
-				a2 = orderItems[i];
+				a2 = currentApp;
 			}
 
-			appetiserCount++;
+			if (currentApp->getTwoForOne())
+			{
+				//std::cout << "valid appetiser found\n";
+				appetiserCount++;
+			}
 		}
 		
 		// If there are two appetisers, set the bool as true and finish iterating
 		if (appetiserCount == 2) 
 		{
+			//std::cout << "discount applied!\n";
 			twoForOne = true;
 			calculateSavings(a1, a2);
 			break;
 		}
 	}
+
+	/*if (!twoForOne)
+	{
+		std::cout << "haha no discount for you stinky\n";
+	}*/
 
 	// Checks through the list if there are 2 appetisers that are valid for 2-4-1
 	// Store these temporarily
@@ -215,7 +232,7 @@ std::string Order::toString()
 
 	if (orderItems.size() == 0)
 	{
-		output += "Your order is currently empty!\nIf you add an item to your order, it will show up here.\n";
+		output += "Your order is currently empty!\nIf you add an item to your order, it will show up here.\n----------\n\n";
 	}
 	else
 	{
@@ -236,6 +253,8 @@ std::string Order::toString()
 		output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
 	}
 
+	output += "\n\n";
+
 	// Returning the string
 	return output;
 }
@@ -247,7 +266,7 @@ std::string Order::checkout()
 	// String that stores the text to be outputted
 	std::string output;
 
-	output += "===== Checkout =====\n";
+	output += "\n\n===== Checkout =====\n";
 
 	// Iterates through all order items, then calls the to string function for the item and adds it to the output
 
@@ -268,7 +287,7 @@ std::string Order::checkout()
 	output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
 
 	// Adds dialogue to the string
-	output += "Do you want to place your order?\nType 'y' to confirm, or 'n' to go back and modify it.\n";
+	output += "\nDo you want to place your order?\nType 'y' to confirm, or 'n' to go back and modify it.\n\n";
 
 	// Returning the string
 	return output;

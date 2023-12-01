@@ -100,8 +100,8 @@ int main()
 	// Create an order object
 	Order order = Order(menu);
 
-	cout << "==========Takeaway Ordering Program==========\n";
-	cout << "-----Help Commands-----\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n";
+	cout << "==========Takeaway Ordering Program==========\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -120,9 +120,9 @@ int main()
 
 		/*for (auto i : parameters)
 		{
-			cout << i;
+			cout << i << endl;
 		}
-		cout << "finished printing out parameters";*/
+		cout << "finished printing out parameters";(*/
 
 		parameters.push_back("");
 		string command = parameters[0];
@@ -132,66 +132,90 @@ int main()
 		}
 		else if (command.compare("add") == 0)
 		{
-			// Getting user input for the item number
-			int input;
-			cout << "Please enter the number of the item from the menu you would like to add.\nIf you want to add multiple items, split them with a comma like this: 1,2,3\n";
-
-			cin >> input;
-
-			Item* choice; // you need to instantiate this using the menu object!
-
-			// Getting the corresponding item pointer for the selected menu object
-			choice = menu.getItem(input);
-
-			// If the pointer is not null, add it to the order and display the order
-			if (choice != nullptr)
+			// Iterating through the parameters vector (for each item the user wishes to add to their order)
+			for (int i = 1; i < (parameters.size() - 1); i++)
 			{
-				order.add(choice);
+				if (i >= parameters.size() || parameters[i].empty() || parameters[i].find_first_not_of(" ") == std::string::npos)
+				{
+					//cout << "current parameter is EMPTY!!";
+					continue;
+				}
 
-				cout << order.toString();
+				// The index for the item in the menu
+				int index;
 
-				cout << "item should have been added...";
+				// Only continues if the input is a number
+				try
+				{
+					// Cast the corresponding element in the vector to an int
+					index = stoi(parameters[i]);
+					// Pointer to the item to add to the menu
+					Item* choice;
 
-				std::vector<Item*> items = menu.getItems();
-				cout << items[0]->toString();
+					// Getting the corresponding item pointer for the selected menu object
+					choice = menu.getItem(index, false, 0);
+
+					// If the pointer is not null, add it to the order and display the order
+					if (choice != nullptr)
+					{
+						order.add(choice);
+					}
+				}
+				catch(const std::invalid_argument& err)
+				{
+					std::cout << "\n-----\nOops!\nOne or more of your inputted numbers was invalid.\nPlease type either 'add' or 'remove' and input an item number again.\nPlease note: any valid items have been added / removed.\n-----\n\n";
+				}
 			}
 
-			// probably also add in an explanation as to the formatting for how they would input multiple items, split by a comma, a space or whatever
-			// pass the input to the add function, then in the add function split the different inputs so that you can add multiple items
-			// then display the order.tostring
+			// Outputs their order
+			cout << order.toString();
 
 			// You may also wish to implement the ability to add multiple items at once!
 			// e.g. add 1 5 9 
 		}
 		else if (command.compare("remove") == 0)
 		{
-			// Getting user input for the item number
-			int input; 
-
-			// Boolean for if the user selects 1. The program will crash if we do not have a special case for when the user selected the 1st item
-			bool first = false;
-
-			cout << "Please enter the number of the item from your order you would like to remove.\nIf you want to remove multiple items, split them with a comma like this: 1,2,3\n";
-
-			cin >> input;
-
-			if (input == 1)
+			// Iterating through the parameters vector (for each item the user wishes to add to their order)
+			for (int i = 1; i < (parameters.size()); i++)
 			{
-				first = true;
+				if (i >= parameters.size() || parameters[i].empty() || parameters[i].find_first_not_of(" ") == std::string::npos)
+				{
+					//cout << "current parameter is EMPTY!!";
+					continue;
+				}
+
+				// The index for the item in the menu
+				int index;
+
+				try
+				{
+					// Cast the corresponding element in the vector to an int
+					index = stoi(parameters[i]);
+
+					// Pointer to the item to remove from the order
+					Item* choice;
+
+					// Getting the size of order items to pass to get item
+					int orderItemsSize = order.getOrderItemsSize();
+
+					// Getting the corresponding item pointer for the selected order object
+					choice = menu.getItem(index, true, orderItemsSize);
+
+					// If the pointer is not null, add it to the order and display the order
+					if (choice != nullptr)
+					{
+						order.remove(choice);
+						
+					}
+				}
+				catch (const std::invalid_argument& err)
+				{
+					std::cout << "\n-----\nOops!\nOne or more of your inputted numbers was invalid.\nPlease type either 'add' or 'remove' and input an item number again.\nPlease note: any valid items have been added / removed.\n-----\n\n";
+				}
 			}
 
-			Item* choice; // you need to instantiate this using the menu object!
-
-			// Getting the corresponding item pointer for the selected menu object
-			choice = menu.getItem(input);
-
-			// If the pointer is not null, add it to the order and display the order
-			if (choice != nullptr)
-			{
-				order.remove(choice, first);
-
-				cout << order.toString();
-			}
+			// Outputs their order
+			cout << order.toString();
 		}
 		else if (command.compare("checkout") == 0)
 		{ 
@@ -200,8 +224,11 @@ int main()
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "-----Help Commands-----\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n";
-			// add some dialogue here just to explain 
+			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
+		}
+		else
+		{
+			cout << "\n\nInvalid input.\nPlease type in a valid command.\nNeed help? Type 'help'.\n\n";
 		}
 
 		parameters.clear();

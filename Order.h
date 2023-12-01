@@ -12,10 +12,13 @@ public:
 	~Order();
 	void printReceipt();
 	void add(Item* item);
-	void remove(Item* item, bool first);
+	void remove(Item* item);
 	std::string checkout();
 	std::string toString();
 	double getTotal() const;
+
+	// CAN WE MAKE THIS A FRIEND FUNCTION WITH MENU??
+	int getOrderItemsSize();
 
 private:
 	void checkTwoForOne();
