@@ -12,8 +12,8 @@ public:
 	std::string toString() override;
 
 	// Get functions PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
-	bool getShareable();
-	bool getTwoForOne();
+	bool getShareable() const;
+	bool getTwoForOne() const;
 
 private:
 	bool shareable;

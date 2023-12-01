@@ -15,12 +15,12 @@ Appetiser::~Appetiser()
 }
 
 // Get functions
-bool Appetiser::getShareable()
+bool Appetiser::getShareable() const
 {
 	return shareable;
 }
 
-bool Appetiser::getTwoForOne()
+bool Appetiser::getTwoForOne() const
 {
 	return twoForOne;
 }

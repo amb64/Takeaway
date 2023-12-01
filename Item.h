@@ -15,9 +15,9 @@ public:
 	std::string virtual toString();
 
 	// Functions to get variables PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
-	int getCalories();
+	int getCalories() const;
 	std::string getName();
-	double getPrice();
+	double getPrice() const;
 
 // Protected variables that can only be accessed by child classes
 protected:

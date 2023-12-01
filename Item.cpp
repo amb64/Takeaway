@@ -17,7 +17,7 @@ Item::~Item()
 }
 
 // Get functions
-int Item::getCalories()
+int Item::getCalories() const
 {
 	return calories;
 }
@@ -27,7 +27,7 @@ std::string Item::getName()
 	return name;
 }
 
-double Item::getPrice()
+double Item::getPrice() const
 {
 	return price;
 }

@@ -19,13 +19,15 @@ Order::~Order()
 }
 
 // Function that gets the private variable total.
-double Order::getTotal()
+double Order::getTotal() const
 {
 	return total;
 }
 
 void Order::calculateTotal()
 {
+	std::cout << "\ncalled calculate total\n";
+
 	// Declaring variable to hold the total while it is being calculated
 	double totalCalc = 0; 
 
@@ -47,106 +49,95 @@ void Order::calculateTotal()
 }
 
 // ADD ABILITY TO ADD MULTIPLE ITEMS
-void Order::add(int itemNo)
+void Order::add(Item* item)
 {
+	std::cout << "\ncalled order.add\n";
+	std::cout << item << std::endl;
+
 	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO ADD MULTIPLE ITEMS IS ADDED 
 
-	// Ensuring the input is in range of the items vector
-	if (itemNo < 1 || itemNo > items.size())
+	// Adding the item to the order vector
+	orderItems.push_back(item);
+
+	std::cout << orderItems[0] << std::endl;
+
+	// Will check for the 2 for 1 deal if the item being added is an appetiser
+	if (typeid(*item) == typeid(Appetiser))
 	{
-		std::cout << "Input out of range\n";
+		checkTwoForOne();
 	}
-	else
+
+	// Calculates the new total
+	calculateTotal();
+
+	// Based on the item number given (will be from 1 instead of 0 like the list, so remember to -1!) will add to the order vector
+	// If item is an appetiser, call checkTwoForOne() 
+	// Then calls calculateTotal()
+
+	/*std::cout << "\nORDER ITEMS:\n";
+	for (auto i : orderItems)
 	{
-		// Offsetting the index for the vector
-		itemNo--;
-
-		// Adding the item to the order vector
-		orderItems.push_back(items[itemNo]);
-
-		// Will check for the 2 for 1 deal if the item being added is an appetiser
-		if (typeid(*items[itemNo]) == typeid(Appetiser))
-		{
-			checkTwoForOne();
-		}
-
-		// Calculates the new total
-		calculateTotal();
-
-		// Based on the item number given (will be from 1 instead of 0 like the list, so remember to -1!) will add to the order vector
-		// If item is an appetiser, call checkTwoForOne() 
-		// Then calls calculateTotal()
-
-		/*std::cout << "\nORDER ITEMS:\n";
-		for (auto i : orderItems)
-		{
-			std::cout << i->toString() << "\n";
-		}*/
-	}
+		std::cout << i->toString() << "\n";
+	}*/
+	
 	
 }
 
 // ADD ABILITY TO REMOVE MULTIPLE ITEMS
-void Order::remove(int itemNo)
+void Order::remove(Item* item, bool first)
 {
 	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO REMOVE MULTIPLE ITEMS IS ADDED 
 	
-	// Ensuring the input is in range of the orderitems vector
-	if (itemNo < 1 || itemNo > orderItems.size())
+	// Checks if itemNo inputted is 1. If it is, we just remove the first element in the list. 
+	// Without this check, the program would crash whenever someone tried to remove the first item in the orderlist.
+	if (first == true)
 	{
-		std::cout << "Input out of range\n";
+		orderItems.erase(orderItems.begin());
 	}
 	else
 	{
-		// Offsetting the index for the vector
-		itemNo--;
+		// Find the pointer in the vector using an iterator, and then remove it
+		auto it = std::find(orderItems.begin(), orderItems.end(), item);
+		orderItems.erase(it);
 
-		// Checks if itemNo inputted is 1. If it is, we just remove the first element in the list. 
-		// Without this check, the program would crash whenever someone tried to remove the first item in the orderlist.
-		if (itemNo == 1)
-		{
-			orderItems.erase(orderItems.begin());
-		}
-		else
-		{
-			orderItems.erase(orderItems.begin() + itemNo);
-		}
-
-		// Iterates through the items vector
-		/*for (size_t i = 0; i < items.size(); i++)
-		{
-			// If the item to be removed matches the one being checked in items, then erase it from the order
-			if (orderItems[itemNo] == items[i])
-			{
-				std::cout << "Order item being removed matches with item in items vector";
-			}
-		}*/
-
-		// Will check for the 2 for 1 deal if the item being removed is an appetiser
-		if (typeid(*items[itemNo]) == typeid(Appetiser))
-		{
-			checkTwoForOne();
-		}
-
-		// Calculates the new total
-		calculateTotal();
-
-		// Same as order, but removes an item from the order vector
-		// If the item is an appetiser, call checkTwoForOne()
-		// Then calls calculateTotal()
-
-		/*std::cout << "\nORDER ITEMS:\n";
-		for (auto i : orderItems)
-		{
-			std::cout << i->toString() << "\n";
-		}*/
-
+		//orderItems.erase(orderItems.begin() + itemNo);
 	}
-	
+
+	// Iterates through the items vector
+	/*for (size_t i = 0; i < items.size(); i++)
+	{
+		// If the item to be removed matches the one being checked in items, then erase it from the order
+		if (orderItems[itemNo] == items[i])
+		{
+			std::cout << "Order item being removed matches with item in items vector";
+		}
+	}*/
+
+	// Will check for the 2 for 1 deal if the item being removed is an appetiser
+	if (typeid(*item) == typeid(Appetiser))
+	{
+		checkTwoForOne();
+	}
+
+	// Calculates the new total
+	calculateTotal();
+
+	// Same as order, but removes an item from the order vector
+	// If the item is an appetiser, call checkTwoForOne()
+	// Then calls calculateTotal()
+
+	/*std::cout << "\nORDER ITEMS:\n";
+	for (auto i : orderItems)
+	{
+		std::cout << i->toString() << "\n";
+	}*/
+
 }
 
 void Order::checkTwoForOne()
 {
+	std::cout << "\ncalled checktwoforone\n";
+
 	// This function works under the assumption that the 2 for 1 deal is only valid once per order.
 
 	// Stores the amount of appetisers

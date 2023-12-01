@@ -118,6 +118,13 @@ int main()
 			token = strtok(NULL, " ");
 		}
 
+		/*for (auto i : parameters)
+		{
+			cout << i;
+		}
+		cout << "finished printing out parameters";*/
+
+		parameters.push_back("");
 		string command = parameters[0];
 
 		if (command.compare("menu") == 0) {
@@ -125,23 +132,29 @@ int main()
 		}
 		else if (command.compare("add") == 0)
 		{
-			//int choice;;
-
-			// Possibly this means that instead of using the index directly in the add function,
-			// I need to move this functionality to this main program
-			// So the user inputs an int, and then this main function could call order.getItem()
-			// Which is a new function that will get the pointer of the item using the item index the user inputs
-			// And then it will use that item index to add the object to the order using order.add()
-
-			Item* choice; // you need to instantiate this using the menu object!
-			order.add(choice);
-
+			// Getting user input for the item number
+			int input;
 			cout << "Please enter the number of the item from the menu you would like to add.\nIf you want to add multiple items, split them with a comma like this: 1,2,3\n";
 
-			//cin >> choice;
-			
+			cin >> input;
 
-			cout << order.toString();
+			Item* choice; // you need to instantiate this using the menu object!
+
+			// Getting the corresponding item pointer for the selected menu object
+			choice = menu.getItem(input);
+
+			// If the pointer is not null, add it to the order and display the order
+			if (choice != nullptr)
+			{
+				order.add(choice);
+
+				cout << order.toString();
+
+				cout << "item should have been added...";
+
+				std::vector<Item*> items = menu.getItems();
+				cout << items[0]->toString();
+			}
 
 			// probably also add in an explanation as to the formatting for how they would input multiple items, split by a comma, a space or whatever
 			// pass the input to the add function, then in the add function split the different inputs so that you can add multiple items
@@ -152,19 +165,36 @@ int main()
 		}
 		else if (command.compare("remove") == 0)
 		{
-			int choice; 
+			// Getting user input for the item number
+			int input; 
+
+			// Boolean for if the user selects 1. The program will crash if we do not have a special case for when the user selected the 1st item
+			bool first = false;
 
 			cout << "Please enter the number of the item from your order you would like to remove.\nIf you want to remove multiple items, split them with a comma like this: 1,2,3\n";
 
-			cin >> choice;
-			order.add(choice);
+			cin >> input;
 
-			cout << order.toString();
+			if (input == 1)
+			{
+				first = true;
+			}
 
-			// same as add but just for the remove function, and only removing 1 at a time
+			Item* choice; // you need to instantiate this using the menu object!
+
+			// Getting the corresponding item pointer for the selected menu object
+			choice = menu.getItem(input);
+
+			// If the pointer is not null, add it to the order and display the order
+			if (choice != nullptr)
+			{
+				order.remove(choice, first);
+
+				cout << order.toString();
+			}
 		}
 		else if (command.compare("checkout") == 0)
-		{
+		{ 
 			cout << order.checkout();
 			// ask for user input, y to confirm, n to go back
 		}

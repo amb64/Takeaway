@@ -16,6 +16,7 @@ public:
 	void loadFile();
 	std::string toString();
 
+	Item* getItem(int index);
 	std::vector<Item*> getItems();
 
 private:

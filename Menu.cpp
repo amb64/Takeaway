@@ -13,9 +13,38 @@ Menu::~Menu()
 
 }
 
+// Returns the items vector
 std::vector<Item*> Menu::getItems()
 {
 	return items;
+}
+
+// Returns a pointer to an item object based on an inputted integer
+Item* Menu::getItem(int index)
+{
+	std::cout << "\ncalled get item\n";
+
+	Item* item;
+
+	if (index < 1 || index > items.size())
+	{
+		std::cout << "Invalid item number.\nPlease type either 'add' or 'remove' and input an item number again.";
+
+		std::cout << "\nreturning null ptr\n";
+		return nullptr;
+	}
+	else
+	{
+		// Index offset
+		index--;
+
+		item = items[index];
+
+		std::cout << items[index];
+
+		std::cout << "\nreturning item pointer\n";
+		return item;
+	}
 }
 
 
@@ -201,7 +230,7 @@ std::string Menu::toString()
 			}
 		}
 
-		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString() + "\n";
+		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString();
 		previousItem = items[i];
 	}
 
