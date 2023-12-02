@@ -1,9 +1,13 @@
 
 ===== Order =====
-(1) Buffalo wings: œ3.99, 450 cal (2-4-1)
+(1) Chicken tikka masala: œ6.99, 700 cal 
 (2) Nachos: œ4.99, 600 cal (shareable)
-(3) Loaded Chips: œ6.99, 800 cal (shareable)(2-4-1)
-(4) Fish & chips: œ8.99, 1000 cal 
+(3) Burger: œ9.99, 950 cal 
+(4) Garlic bread: œ3.99, 500 cal (2-4-1)
+(5) Loaded chips: œ5.99, 700 cal (shareable)(2-4-1)
+(6) Burger: œ9.99, 950 cal 
 ----------
-2-4-1 discount applied! Savings: œ3.99
-Total: œ20.97
+2-4-1 discount applied! Savings: œ4.99
+Total: œ36.95
+
+

@@ -25,9 +25,9 @@ double Order::getTotal() const
 }
 
 // Returns the size of orderItems
-int Order::getOrderItemsSize()
+std::vector<Item*> Order::getOrderItems()
 {
-	return orderItems.size();
+	return orderItems;
 }
 
 void Order::calculateTotal()
@@ -232,7 +232,7 @@ std::string Order::toString()
 
 	if (orderItems.size() == 0)
 	{
-		output += "Your order is currently empty!\nIf you add an item to your order, it will show up here.\n----------\n\n";
+		output += "Your order is currently empty!\nIf you add an item to your order, it will show up here.\n----------";
 	}
 	else
 	{
@@ -307,5 +307,5 @@ void Order::printReceipt()
 	out << output;
 	out.close();
 
-	std::cout << "\nYour receipt has been successfully saved to file 'receipt.txt'!\n";
+	std::cout << "\nYour receipt has been successfully saved to file 'receipt.txt'!\n\n";
 }

@@ -16,9 +16,8 @@ public:
 	void loadFile();
 	std::string toString();
 
-	Item* getItem(int index, bool isRemoving, int orderItemsSize);
+	Item* getItem(int index, bool isRemoving, std::vector<Item*> orderItems);
 
-	// CAN WE MAKE THIS A FRIEND FUNCTION WITH ORDER??
 	std::vector<Item*> getItems();
 
 private:

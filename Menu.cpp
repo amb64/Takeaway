@@ -20,9 +20,11 @@ std::vector<Item*> Menu::getItems()
 }
 
 // Returns a pointer to an item object based on an inputted integer
-Item* Menu::getItem(int index, bool isRemoving, int orderItemsSize)
+Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 {
 	//std::cout << "\ncalled get item\n";
+
+	int orderItemsSize = orderItems.size();
 
 	Item* item;
 
@@ -31,18 +33,15 @@ Item* Menu::getItem(int index, bool isRemoving, int orderItemsSize)
 	// If the user is adding and the index is larger than the size of the items vector
 	// If the user is removing and the index is larger than the orderItems vector
 	// Then there is an error in the input
-	if (index < 1 || (!isRemoving && index > items.size()) || (isRemoving && index > orderItemsSize))
-	{
-		std::cout << "\n-----\nOops!\nOne or more of your inputted numbers was invalid.\nPlease type either 'add' or 'remove' and input an item number again.\nPlease note: any valid items have been added / removed.\n-----\n\n";
 
-		//std::cout << "\nreturning null ptr\n";
-		return nullptr;
-	}
-	else
+	// Furthermore, decimals are accepted but only the first digit is taken, e.g 1.7 becomes 1
+
+	if (index >= 1 && (!isRemoving && index <= items.size()))
 	{
 		// Index offset
 		index--;
 
+		// The item in the items list
 		item = items[index];
 
 		//std::cout << items[index];
@@ -50,6 +49,36 @@ Item* Menu::getItem(int index, bool isRemoving, int orderItemsSize)
 		//std::cout << "\nreturning item pointer\n";
 		return item;
 	}
+	else if (index >= 1 && (isRemoving && index <= orderItemsSize))
+	{
+		// Index offset
+		index--;
+
+		//std::cout << "\nin getitem, index is: " << index << std::endl;
+
+		// The item in the order items list
+		item = orderItems[index];
+
+		//std::cout << item->toString();
+
+		//std::cout << items[index];
+
+		//std::cout << "\nreturning item pointer\n";
+		return item;
+	}
+	else
+	{
+		//std::cout << "the error is in get item";
+		std::cout << "\nOops! Your input '" << index << "' was invalid.";
+
+		//std::cout << "\nreturning null ptr\n";
+		return nullptr;
+	}
+
+	/*if (index < 1 || (!isRemoving && index > items.size()) || (isRemoving && index > orderItemsSize))
+	{
+
+	}*/
 }
 
 

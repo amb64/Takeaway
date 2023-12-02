@@ -16,9 +16,7 @@ public:
 	std::string checkout();
 	std::string toString();
 	double getTotal() const;
-
-	// CAN WE MAKE THIS A FRIEND FUNCTION WITH MENU??
-	int getOrderItemsSize();
+	std::vector<Item*> getOrderItems();
 
 private:
 	void checkTwoForOne();
