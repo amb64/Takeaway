@@ -41,13 +41,6 @@ std::string Item::toString()
 	// Creates the string and also ensures that it outputs with 2 decimal places only
 	output = name + ": \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << price).str() + ", " + std::to_string(calories) + " cal ";
 
-	/*try {
-		output = name + ": \x9C" + std::to_string(price) + ", " + std::to_string(calories) + " cal ";
-	}
-	catch (const std::bad_alloc& e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
-	}*/
-
 	// Returns the string
 	return output;
 }

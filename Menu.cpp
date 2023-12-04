@@ -44,9 +44,6 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 		// The item in the items list
 		item = items[index];
 
-		//std::cout << items[index];
-
-		//std::cout << "\nreturning item pointer\n";
 		return item;
 	}
 	else if (index >= 1 && (isRemoving && index <= orderItemsSize))
@@ -54,31 +51,17 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 		// Index offset
 		index--;
 
-		//std::cout << "\nin getitem, index is: " << index << std::endl;
-
 		// The item in the order items list
 		item = orderItems[index];
 
-		//std::cout << item->toString();
-
-		//std::cout << items[index];
-
-		//std::cout << "\nreturning item pointer\n";
 		return item;
 	}
 	else
 	{
-		//std::cout << "the error is in get item";
 		std::cout << "\nOops! Your input '" << index << "' was invalid.";
 
-		//std::cout << "\nreturning null ptr\n";
 		return nullptr;
 	}
-
-	/*if (index < 1 || (!isRemoving && index > items.size()) || (isRemoving && index > orderItemsSize))
-	{
-
-	}*/
 }
 
 
@@ -115,13 +98,6 @@ void Menu::loadFile()
 					itemList.push_back(item);
 				}
 			}
-
-			/*for (auto i : itemList)
-			{
-				cout << i << endl;
-			}
-			cout << "end" << endl;*/
-			// print out individual list to check it recognises each object
 
 			// Adding the data for the current menu item into the 2d vector
 			menuList.push_back(itemList);
@@ -169,11 +145,6 @@ void Menu::loadFile()
 				Appetiser* a;
 				a = new Appetiser(calories, itemName, price, isShareable, isTwoForOne);
 				items.push_back(a);
-
-				//Testing
-				/*std::string output = a->toString();
-				std::cout << output;*/
-
 			}
 
 			// Main course
@@ -183,11 +154,6 @@ void Menu::loadFile()
 				MainCourse* a;
 				a = new MainCourse(calories, itemName, price);
 				items.push_back(a);
-
-				//Testing
-				/*std::string output = a->toString();
-				std::cout << output;*/
-
 			}
 
 			// Beverage
@@ -201,24 +167,11 @@ void Menu::loadFile()
 				Beverage* a;
 				a = new Beverage(calories, itemName, price, volume, abv);
 				items.push_back(a);
-
-				//Testing
-				/*std::string output = a->toString();
-				std::cout << output;*/
-
 			}
 		}
 
 		// Close the file
 		file.close();
-
-		/*for (auto i : menuList)
-		{
-			for (auto j : i)
-			{
-				cout << j << endl;
-			}
-		}*/
 	}
 
 	// Need to open the csv file
@@ -227,11 +180,8 @@ void Menu::loadFile()
 	// Determine which kind of item object needs to be created
 	// Create the object
 	// When done reading from the file, close it and delete the variable for the file as well as the list used
-
-	//std::cout << "\nMenu.cpp after making objects, items size is: " << items.size();
 }
 
-// NEED TO BE ABLE TO SORT MENU IN ASCENDING AND DESCENDING ORDER
 std::string Menu::toString()
 {
 	// Function that displays the menu nicely when printed out on the screen.

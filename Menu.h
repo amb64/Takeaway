@@ -23,5 +23,3 @@ public:
 private:
 	std::string filePath;
 };
-
-// Additional functionality : add the ability to sort by ascending or descending menu

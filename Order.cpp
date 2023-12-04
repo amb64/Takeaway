@@ -57,15 +57,8 @@ void Order::calculateTotal()
 // ADD ABILITY TO ADD MULTIPLE ITEMS
 void Order::add(Item* item)
 {
-	//std::cout << "\ncalled order.add\n";
-	//std::cout << item << std::endl;
-
-	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO ADD MULTIPLE ITEMS IS ADDED 
-
 	// Adding the item to the order vector
 	orderItems.push_back(item);
-
-	//std::cout << orderItems[0] << std::endl;
 
 	// Will check for the 2 for 1 deal if the item being added is an appetiser
 	if (typeid(*item) == typeid(Appetiser))
@@ -79,45 +72,15 @@ void Order::add(Item* item)
 	// Based on the item number given (will be from 1 instead of 0 like the list, so remember to -1!) will add to the order vector
 	// If item is an appetiser, call checkTwoForOne() 
 	// Then calls calculateTotal()
-
-	/*std::cout << "\nORDER ITEMS:\n";
-	for (auto i : orderItems)
-	{
-		std::cout << i->toString() << "\n";
-	}*/
-	
 	
 }
 
 // ADD ABILITY TO REMOVE MULTIPLE ITEMS
 void Order::remove(Item* item)
 {
-	// MAKE SURE THERE IS ERROR HANDLING FOR THE USER INPUT WHEN THE ABILITY TO REMOVE MULTIPLE ITEMS IS ADDED 
-	
-	// Checks if itemNo inputted is 1. If it is, we just remove the first element in the list. 
-	// Without this check, the program would crash whenever someone tried to remove the first item in the orderitems vector.
-	/*if (first == true)
-	{
-		orderItems.erase(orderItems.begin());
-	}*/
-	//else
-	{
-		// Find the pointer in the vector using an iterator, and then remove it
-		auto it = std::find(orderItems.begin(), orderItems.end(), item);
-		orderItems.erase(it);
-
-		//orderItems.erase(orderItems.begin() + itemNo);
-	}
-
-	// Iterates through the items vector
-	/*for (size_t i = 0; i < items.size(); i++)
-	{
-		// If the item to be removed matches the one being checked in items, then erase it from the order
-		if (orderItems[itemNo] == items[i])
-		{
-			std::cout << "Order item being removed matches with item in items vector";
-		}
-	}*/
+	// Find the pointer in the vector using an iterator, and then remove it
+	auto it = std::find(orderItems.begin(), orderItems.end(), item);
+	orderItems.erase(it);
 
 	// Will check for the 2 for 1 deal if the item being removed is an appetiser
 	if (typeid(*item) == typeid(Appetiser))
@@ -131,19 +94,10 @@ void Order::remove(Item* item)
 	// Same as order, but removes an item from the order vector
 	// If the item is an appetiser, call checkTwoForOne()
 	// Then calls calculateTotal()
-
-	/*std::cout << "\nORDER ITEMS:\n";
-	for (auto i : orderItems)
-	{
-		std::cout << i->toString() << "\n";
-	}*/
-
 }
 
 void Order::checkTwoForOne()
 {
-	//std::cout << "\ncalled checktwoforone\n";
-
 	// This function works under the assumption that the 2 for 1 deal is only valid once per order.
 
 	// Stores the amount of appetisers
@@ -160,23 +114,24 @@ void Order::checkTwoForOne()
 	// Iterates through the order vector
 	for (size_t i = 0; i < orderItems.size(); i++) 
 	{
+		// Trying to cast the current item to appetiser type
+		Appetiser* currentItem = dynamic_cast<Appetiser*>(orderItems[i]);
 
-		Appetiser* currentApp = dynamic_cast<Appetiser*>(orderItems[i]);
-		if (currentApp) // Check if dynamic_cast succeeded (i.e., it's an Appetiser)
+		// If that worked, then the current item is an appetiser
+		if (currentItem)
 		{
 			// Storing these appetisers as we need them to calculate the savings
 			if (a1 == nullptr)
 			{
-				a1 = currentApp;
+				a1 = currentItem;
 			}
 			else
 			{
-				a2 = currentApp;
+				a2 = currentItem;
 			}
 
-			if (currentApp->getTwoForOne())
+			if (currentItem->getTwoForOne())
 			{
-				//std::cout << "valid appetiser found\n";
 				appetiserCount++;
 			}
 		}
@@ -184,17 +139,11 @@ void Order::checkTwoForOne()
 		// If there are two appetisers, set the bool as true and finish iterating
 		if (appetiserCount == 2) 
 		{
-			//std::cout << "discount applied!\n";
 			twoForOne = true;
 			calculateSavings(a1, a2);
 			break;
 		}
 	}
-
-	/*if (!twoForOne)
-	{
-		std::cout << "haha no discount for you stinky\n";
-	}*/
 
 	// Checks through the list if there are 2 appetisers that are valid for 2-4-1
 	// Store these temporarily
@@ -216,7 +165,6 @@ void Order::calculateSavings(Item* a1, Item* a2)
 	}
 }
 
-// could do one function for tostring, checkout, based on bool sent to them, or something, as well as the print receipt so we can output £ direcly rather than the ascii character
 std::string Order::toString()
 {
 	// Outputs the order nice and pretty
