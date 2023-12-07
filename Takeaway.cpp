@@ -37,7 +37,7 @@ int main()
 	Order order = Order(menu);
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
-	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\nType an 'a' or 'd' after menu to sort in ascending or descending order.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -59,14 +59,28 @@ int main()
 		parameters.push_back("");
 		string command = parameters[0];
 
-		if (command.compare("menu") == 0) {
-			cout << menu.toString();
+		if (command.compare("menu") == 0) 
+		{
+			if (parameters[1].empty() || parameters[1].find_first_not_of(" ") == std::string::npos)
+			{
+				// Output the regular menu
+				cout << menu.toString();
+			}
+			else if (parameters[1] == "a")
+			{
+				// print menu in ascending order
+			}
+			else if (parameters[1] == "d")
+			{
+				// print menu in descending order
+			}
 		}
 		else if (command.compare("add") == 0)
 		{
 			// Iterating through the parameters vector (for each item the user wishes to add to their order)
 			for (int i = 1; i < (parameters.size() - 1); i++)
 			{
+				// Check if the parameter is empty
 				if (i >= parameters.size() || parameters[i].empty() || parameters[i].find_first_not_of(" ") == std::string::npos)
 				{
 					//cout << "current parameter is EMPTY!!";
@@ -183,7 +197,7 @@ int main()
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
+			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\nType an 'a' or 'd' after menu to sort in ascending or descending order.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
 		else if (command.compare("exit") == 1)

@@ -14,7 +14,11 @@ public:
 	Menu(std::string filePath);
 	~Menu();
 	void loadFile();
+
+	// Functions for printing out the menu
 	std::string toString();
+	std::string toStringA();
+	std::string toStringD();
 
 	Item* getItem(int index, bool isRemoving, std::vector<Item*> orderItems);
 

@@ -223,3 +223,15 @@ std::string Menu::toString()
 	// Returning the string
 	return output;
 }
+
+// Ascending menu
+std::string Menu::toStringA()
+{
+	return "";
+}
+
+// Descending menu
+std::string Menu::toStringD()
+{
+	return "";
+}
