@@ -228,7 +228,7 @@ std::string Order::checkout()
 	// If a 241 discount is applicable, notify the user and adds the savings to the string
 	if (twoForOne == true)
 	{
-		output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str();
+		output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str() + " ";
 	}
 
 	// Adds their total to the string

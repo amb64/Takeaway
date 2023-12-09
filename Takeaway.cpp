@@ -37,7 +37,7 @@ int main()
 	Order order = Order(menu);
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
-	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\nType an 'a' or 'd' after menu to sort in ascending or descending order.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -61,6 +61,7 @@ int main()
 
 		if (command.compare("menu") == 0) 
 		{
+			// Check if the user entered an additional letter after menu
 			if (parameters[1].empty() || parameters[1].find_first_not_of(" ") == std::string::npos)
 			{
 				// Output the regular menu
@@ -68,11 +69,18 @@ int main()
 			}
 			else if (parameters[1] == "a")
 			{
-				// print menu in ascending order
+				// Ascending menu
+				cout << menu.toStringPlain(true);
 			}
 			else if (parameters[1] == "d")
 			{
-				// print menu in descending order
+				// Descending menu
+				cout << menu.toStringPlain(false);
+			}
+			else
+			{
+				// Invalid input message
+				cout << "\nOops! Your input '" << parameters[1] << "' was invalid.\n\n";
 			}
 		}
 		else if (command.compare("add") == 0)
@@ -95,6 +103,7 @@ int main()
 				{
 					// Cast the corresponding element in the vector to an int
 					index = stoi(parameters[i]);
+
 					// Pointer to the item to add to the menu
 					Item* choice;
 
@@ -177,6 +186,9 @@ int main()
 		}
 		else if (command.compare("checkout") == 0)
 		{ 
+			// The receipt does NOT display £ correctly. Wanted to fix this but it is not an easy fix as Order's toString function is not where £s are added,
+			// they are added in the toString methods for the Item class and its child classes.
+
 			string choice;
 
 			cout << order.checkout();
@@ -194,15 +206,17 @@ int main()
 
 			// Clearing the new line character from the getline to do with the user command, ensures that the "invalid input" message in the "else" section of comparing the commands does not trigger
 			cin.ignore();
+
+			return 0;
 		}
 		else if (command.compare("help") == 0)
 		{
 			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\nType an 'a' or 'd' after menu to sort in ascending or descending order.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
-		else if (command.compare("exit") == 1)
+		else if (command.compare("exit") != 0)
 		{
-			cout << "\n\nInvalid input.\nPlease type in a valid command.\nNeed help? Type 'help'.\n\n";
+			cout << "\n\nInvalid input.\nPlease type in a valid command.\nRemember, commands are case sensitive.\nNeed help? Type 'help'.\n\n";
 		}
 
 		parameters.clear();

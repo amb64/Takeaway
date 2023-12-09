@@ -5,6 +5,9 @@ Menu::Menu(std::string ifilePath)
 {
 	filePath = ifilePath;
 	loadFile();
+
+	// Sort the menu
+	sortItems();
 }
 
 // Destructor
@@ -18,6 +21,34 @@ std::vector<Item*> Menu::getItems()
 {
 	return items;
 }
+
+void Menu::sortItems()
+{
+	// Making a vector for the ascending menu
+	ascendingItems = items;
+
+	// Sorting the menu by comparing the price variable of the objects
+	// Need to use a lambda function here to call comparePrice on the objects to actually compare the price variables
+	std::sort(ascendingItems.begin(), ascendingItems.end(), [this](Item* item1, Item* item2) {return comparePriceA(item1, item2);});
+
+	// Repeat the same for the descending items vector
+	descendingItems = items;
+
+	std::sort(descendingItems.begin(), descendingItems.end(), [this](Item* item1, Item* item2){return comparePriceD(item1, item2);});
+}
+
+// Function that compares the price of 2 Item objects to be used to sort the menu in order
+bool Menu::comparePriceA(Item* item1, Item* item2)
+{
+	return item1->getPrice() < item2->getPrice();
+}
+
+// The same as the above function but the operator is swapped so we can sort in descending order
+bool Menu::comparePriceD(Item* item1, Item* item2)
+{
+	return item1->getPrice() > item2->getPrice();
+}
+
 
 // Returns a pointer to an item object based on an inputted integer
 Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
@@ -224,14 +255,36 @@ std::string Menu::toString()
 	return output;
 }
 
-// Ascending menu
-std::string Menu::toStringA()
+// A seperate implementation of the to string function that removes the formatting as the menu has been sorted
+std::string Menu::toStringPlain(bool asc) const
 {
-	return "";
-}
+	std::vector<Item*> menu;
+	std::string output;
 
-// Descending menu
-std::string Menu::toStringD()
-{
-	return "";
+	output += "\n----------Menu: ";
+
+	// If the ascending bool is true, print out ascending items
+	if (asc)
+	{
+		menu = ascendingItems;
+		output += "Ascending";
+	}
+	// Otherwise, descending items
+	else
+	{
+		menu = descendingItems;
+		output += "Descending";
+	}
+	output += "----------\n";
+
+	// Add them to the output variable
+	for (size_t i = 0; i < menu.size(); i++)
+	{
+		output += menu[i]->toString();
+	}
+
+	output += "\n\n";
+
+	// Return the output variable
+	return output;
 }

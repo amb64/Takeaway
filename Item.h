@@ -3,18 +3,15 @@
 #include <vector>
 #include <string>
 
-// Do I need: destructors, copy constructors? YES
-// Do these need to be split into seperate header files? Simple fix but is it requried YES IT DOES FIX IT
-
-// Item class, does this need a constructor considering it would never be made on its own? YES??
 class Item
 {
 public:
 	Item(int icalories, std::string iname, double iprice);
 	~Item();
+
 	std::string virtual toString();
 
-	// Functions to get variables PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
+	// Functions to get variables
 	int getCalories() const;
 	std::string getName();
 	double getPrice() const;

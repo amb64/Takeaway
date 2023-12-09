@@ -12,7 +12,7 @@ public:
 	std::string toString() override;
 	bool isAlcoholic() const;
 
-	// Get functions PLEASE CHECK IF THESE ARE ACTUALLY NEEDED!
+	// Get functions
 	int getVolume();
 	double getAbv();
 

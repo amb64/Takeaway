@@ -12,8 +12,6 @@ MainCourse::~MainCourse()
 
 }
 
-
-
 std::string MainCourse::toString()
 {
 	// Call the base method

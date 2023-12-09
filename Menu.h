@@ -4,9 +4,11 @@
 #include "Appetiser.h"
 #include "MainCourse.h"
 #include "Beverage.h"
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 class Menu : public ItemList
 {
@@ -17,13 +19,20 @@ public:
 
 	// Functions for printing out the menu
 	std::string toString();
-	std::string toStringA();
-	std::string toStringD();
+
+	std::string toStringPlain(bool asc) const;
 
 	Item* getItem(int index, bool isRemoving, std::vector<Item*> orderItems);
 
 	std::vector<Item*> getItems();
 
 private:
+	void sortItems();
+	bool comparePriceA(Item* item1, Item* item2);
+	bool comparePriceD(Item* item1, Item* item2);
+
 	std::string filePath;
+
+	std::vector<Item*> ascendingItems;
+	std::vector<Item*> descendingItems;
 };
