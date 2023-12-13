@@ -220,7 +220,7 @@ std::string Order::checkout()
 
 	for (size_t i = 0; i < orderItems.size(); i++)
 	{
-		output += "(" + std::to_string(i + 1) + ") " + items[i]->toString();
+		output += "(" + std::to_string(i + 1) + ") " + orderItems[i]->toString();
 	}
 
 	output += "----------\n";

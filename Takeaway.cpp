@@ -102,6 +102,7 @@ int main()
 				try
 				{
 					// Cast the corresponding element in the vector to an int
+					// If the user types a decimal, it is rounded down / only the first digit is registered
 					index = stoi(parameters[i]);
 
 					// Pointer to the item to add to the menu
@@ -119,9 +120,15 @@ int main()
 						order.add(choice);
 					}
 				}
+				// If the current elemt cant be cast to an integer, it must not be a number
 				catch(const invalid_argument&)
 				{
 					cout << "\nOops! Your input '" << parameters[i] <<  "' was invalid.";
+				}
+				// If the number is out of range of the limits for an integer, notify the user
+				catch (const out_of_range&)
+				{
+					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
 				}
 			}
 
@@ -144,12 +151,18 @@ int main()
 				}
 
 				// Try adding them to the vector as integers
+				// If the user types a decimal, it is rounded down / only the first digit is registered
 				try
 				{
 					itemsToRemove.push_back(stoi(parameters[i]));
 				}
 				// If that doesnt work, the input must be invalid
 				catch (const invalid_argument&)
+				{
+					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
+				}
+				// If the number is out of range of the limits for an integer, notify the user
+				catch(const out_of_range&)
 				{
 					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
 				}
@@ -198,6 +211,7 @@ int main()
 			if (choice == "y" || choice == "Y")
 			{
 				order.printReceipt();
+				return 0;
 			}
 			else
 			{
@@ -206,12 +220,10 @@ int main()
 
 			// Clearing the new line character from the getline to do with the user command, ensures that the "invalid input" message in the "else" section of comparing the commands does not trigger
 			cin.ignore();
-
-			return 0;
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.(1) menu - Displays the food menu.\nType an 'a' or 'd' after menu to sort in ascending or descending order.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n---------------------\n\n";
+			cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
 		else if (command.compare("exit") != 0)

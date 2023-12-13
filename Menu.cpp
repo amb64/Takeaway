@@ -67,6 +67,8 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 
 	// Furthermore, decimals are accepted but only the first digit is taken, e.g 1.7 becomes 1
 
+	// Limits for integers
+
 	if (index >= 1 && (!isRemoving && index <= items.size()))
 	{
 		// Index offset
