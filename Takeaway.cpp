@@ -175,8 +175,10 @@ int main()
 			
 			// The following code works even if the user inputted "remove banana -1" or something because the itemsToRemove list would be empty, and therefore the loop would not trigger at all
 			
-			// Sorting the vector in ascending order
+			// Sorting the vector in ascending order and the removing duplicates
 			sort(itemsToRemove.begin(), itemsToRemove.end());
+			auto dupes = unique(itemsToRemove.begin(), itemsToRemove.end());
+			itemsToRemove.erase(dupes, itemsToRemove.end());
 
 			// Iterating through the items in the itemsToRemove vector- but backwards as during this the size of the orderItems vector changes.
 			// So we want to always remove the last item first!
@@ -199,7 +201,7 @@ int main()
 			}
 
 			// Outputs their order
-			cout << "\n\nYour order has been updated, and any valid items have been removed!\n";
+			cout << "\n\nYour order has been updated, and any valid items have been removed!\n(Duplicate inputs were not actioned)\n";
 			cout << order.toString();
 		}
 		else if (command.compare("checkout") == 0)
