@@ -2,12 +2,12 @@
 ===== Order =====
 (1) Buffalo wings: œ3.99, 450 cal (2-4-1)
 (2) Garlic bread: œ3.99, 500 cal (2-4-1)
-(3) Mac & cheese: œ7.99, 850 cal 
-(4) Chicken tikka masala: œ6.99, 700 cal 
+(3) Burger: œ9.99, 950 cal 
+(4) Fish & chips: œ8.99, 1000 cal 
 (5) Coke: œ2.50, 140 cal (330ml)
-(6) Coke: œ2.50, 140 cal (330ml)
+(6) Water: œ1.50, 0 cal (330ml)
 ----------
 2-4-1 discount applied! Savings: œ3.99
-Total: œ23.97
+Total: œ26.97
 
 

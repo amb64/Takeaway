@@ -57,7 +57,6 @@ bool Menu::comparePriceD(Item* item1, Item* item2)
 	return item1->getPrice() > item2->getPrice();
 }
 
-
 // Returns a pointer to an item object based on an inputted integer
 Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 {
@@ -69,11 +68,12 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 
 	// If:
 	// The index is less than 1
-	// If the user is adding and the index is larger than the size of the items vector
-	// If the user is removing and the index is larger than the orderItems vector
+	// The user is adding and the index is larger than the size of the items vector
+	// The user is removing and the index is larger than the orderItems vector
 	// Then there is an error in the input
 
 	// Furthermore, decimals are accepted but only the first digit is taken, e.g 1.7 becomes 1
+	// 0.x is not accepted
 
 	// Limits for integers
 
@@ -97,6 +97,7 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 
 		return item;
 	}
+	// Input is invalid
 	else
 	{
 		std::cout << "\nOops! Your input '" << index << "' was invalid.";
@@ -104,7 +105,6 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 		return nullptr;
 	}
 }
-
 
 void Menu::loadFile()
 {

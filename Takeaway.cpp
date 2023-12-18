@@ -37,7 +37,7 @@ int main()
 	Order order = Order();
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
-	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -82,6 +82,11 @@ int main()
 				// Invalid input message
 				cout << "\nOops! Your input '" << parameters[1] << "' was invalid.\n\n";
 			}
+		}
+		// Simply displays the user's order, added because felt it was needed
+		else if (command.compare("order") == 0)
+		{
+			cout << order.toString();
 		}
 		else if (command.compare("add") == 0)
 		{
@@ -202,26 +207,32 @@ int main()
 			// The receipt does NOT display £ correctly. Wanted to fix this but it is not an easy fix as Order's toString function is not where £s are added,
 			// they are added in the toString methods for the Item class and its child classes.
 
-			string choice;
-
 			cout << order.checkout();
-			cin >> choice;
 
-			// If they type y, print out the receipt, otherwise checkout is cancelled
-			if (choice == "y" || choice == "Y")
+			while (true)
 			{
-				order.printReceipt();
+				string choice;
+				cin >> choice;
 
-				// Cleanup and end program
-				menu.Cleanup();
-				order.Cleanup();
-				return 0;
-			}
-			// Didnt feel the need to add 'n' as an option
-			// Even if the user cancelled checkout on accident, they can just type checkout again
-			else
-			{
-				cout << "\n\nCheckout cancelled.\nPlease select the checkout option once you are content with the contents of your order.\n\n";
+				// If they type y, print out the receipt, otherwise checkout is cancelled
+				if (choice == "y" || choice == "Y")
+				{
+					order.printReceipt();
+
+					// Cleanup and end program
+					menu.Cleanup();
+					order.Cleanup();
+					return 0;
+				}
+				else if (choice == "n" || choice == "N")
+				{
+					cout << "\nCheckout cancelled.\nPlease select the checkout option once you are satisfied with the contents of your order.\n\n";
+					break;
+				}
+				else
+				{
+					cout << "\nInvalid input.\nPlease type 'y' to confirm your order, or 'n' to cancel it.\n\n";
+				}
 			}
 
 			// Clearing the new line character from the getline to do with the user command, ensures that the "invalid input" message in the "else" section of comparing the commands does not trigger
@@ -229,12 +240,12 @@ int main()
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
 		else if (command.compare("exit") != 0)
 		{
-			cout << "\n\nInvalid input.\nPlease type in a valid command.\nRemember, commands are case sensitive.\nNeed help? Type 'help'.\n\n";
+			cout << "\nInvalid input.\nPlease type in a valid command.\nRemember, commands are case sensitive.\nNeed help? Type 'help'.\n\n";
 		}
 
 		parameters.clear();

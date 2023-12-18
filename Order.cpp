@@ -46,13 +46,8 @@ void Order::calculateTotal()
 
 	// Sets the actual total variable
 	total = totalCalc;
-
-	// Using the private vector storing pointers to the items in the order,
-	// Calculates the total while considering items eligible for a 2-4-1 discount (use the private bool for this)
-	// Remember that they will only get the cheapest item free! (Will need to add to the csv so there is an appetiser with different price)
 }
 
-// ADD ABILITY TO ADD MULTIPLE ITEMS
 void Order::add(Item* item)
 {
 	// Adding the item to the order vector
@@ -66,14 +61,8 @@ void Order::add(Item* item)
 
 	// Calculates the new total
 	calculateTotal();
-
-	// Based on the item number given (will be from 1 instead of 0 like the list, so remember to -1!) will add to the order vector
-	// If item is an appetiser, call checkTwoForOne() 
-	// Then calls calculateTotal()
-	
 }
 
-// ADD ABILITY TO REMOVE MULTIPLE ITEMS
 void Order::remove(Item* item)
 {
 	// Find the pointer in the vector using an iterator, and then remove it
@@ -88,10 +77,6 @@ void Order::remove(Item* item)
 
 	// Calculates the new total
 	calculateTotal();
-
-	// Same as order, but removes an item from the order vector
-	// If the item is an appetiser, call checkTwoForOne()
-	// Then calls calculateTotal()
 }
 
 void Order::checkTwoForOne()
@@ -142,11 +127,6 @@ void Order::checkTwoForOne()
 			break;
 		}
 	}
-
-	// Checks through the list if there are 2 appetisers that are valid for 2-4-1
-	// Store these temporarily
-	// Then sets the bool to either true or false 
-	// If true, calculate the savings (compare the price attribute, the smaller one is then considered the savings amount)
 }
 
 void Order::calculateSavings(Item* a1, Item* a2)
@@ -164,11 +144,7 @@ void Order::calculateSavings(Item* a1, Item* a2)
 }
 
 std::string Order::toString()
-{
-	// Outputs the order nice and pretty
-	// Must include the total price, and the savings made
-	// See brief for specifics
-	
+{	
 	// String that stores the text to be outputted
 	std::string output;
 
@@ -207,45 +183,49 @@ std::string Order::toString()
 
 std::string Order::checkout()
 {
-	// Similar but slightly different to the toString function
-	
-	// String that stores the text to be outputted
-	std::string output;
-
-	output += "\n\n===== Checkout =====\n";
-
-	// Iterates through all order items, then calls the to string function for the item and adds it to the output
-
-	for (size_t i = 0; i < orderItems.size(); i++)
+	// Only if there are items in the order
+	if (orderItems.size() > 0)
 	{
-		output += "(" + std::to_string(i + 1) + ") " + orderItems[i]->toString();
+		// Similar but slightly different to the toString function
+
+		// String that stores the text to be outputted
+		std::string output;
+
+		output += "\n\n===== Checkout =====\n";
+
+		// Iterates through all order items, then calls the to string function for the item and adds it to the output
+
+		for (size_t i = 0; i < orderItems.size(); i++)
+		{
+			output += "(" + std::to_string(i + 1) + ") " + orderItems[i]->toString();
+		}
+
+		output += "----------\n";
+
+		// If a 241 discount is applicable, notify the user and adds the savings to the string
+		if (twoForOne == true)
+		{
+			output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str() + " ";
+		}
+
+		// Adds their total to the string
+		output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
+
+		// Adds dialogue to the string
+		output += "\nDo you want to place your order?\nType 'y' to confirm, or 'n' to go back and modify it.\n\n";
+
+		// Returning the string
+		return output;
 	}
-
-	output += "----------\n";
-
-	// If a 241 discount is applicable, notify the user and adds the savings to the string
-	if (twoForOne == true)
+	// If the order is empty display a message
+	else
 	{
-		output += "2-4-1 discount applied! Savings: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << savings).str() + " ";
+		return "\n\nYour order is currently empty!\nPlease type 'n' to cancel your order so you can add items to it.\n\n";
 	}
-
-	// Adds their total to the string
-	output += "Total: \x9C" + (std::ostringstream() << std::fixed << std::setprecision(2) << total).str() + "\n";
-
-	// Adds dialogue to the string
-	output += "\nDo you want to place your order?\nType 'y' to confirm, or 'n' to go back and modify it.\n\n";
-
-	// Returning the string
-	return output;
-
 }
 
 void Order::printReceipt()
 {
-	// Calls to string to get the string
-	// Stores it in a text file called receipt.txt
-	// See brief for specifics
-
 	// Calling to string. Doing this instead of checkout as checkout includes additional changes
 	std::string output = toString();
 
