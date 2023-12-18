@@ -21,7 +21,7 @@ public:
 
 	// Functions for printing out the menu
 	std::string toString();
-	std::string toStringPlain(bool asc) const;
+	std::string toStringPlain(bool asc);
 
 	Item* getItem(int index, bool isRemoving, std::vector<Item*> orderItems);
 
@@ -34,4 +34,8 @@ private:
 
 	std::vector<Item*> ascendingItems;
 	std::vector<Item*> descendingItems;
+
+	// Int that represents the current menu type.
+	// 0 - normal , 1 - ascending , 2 - descending
+	int menuType;
 };

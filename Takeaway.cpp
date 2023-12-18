@@ -37,7 +37,7 @@ int main()
 	Order order = Order();
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
-	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nWhen adding items, please use the corresponding number from the most recently outputted menu,\notherwise your order may not be what you expected.\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -242,7 +242,7 @@ int main()
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "\n\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+			cout << "\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nWhen adding items, please use the corresponding number from the most recently outputted menu,\notherwise your order may not be what you expected.\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
 		else if (command.compare("exit") != 0)
