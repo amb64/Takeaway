@@ -1,12 +1,8 @@
 #include "Order.h"
 
 // Constructor
-Order::Order(Menu menu)
+Order::Order()
 {
-	// Setting items as the items vector from the menu class, which is why this get function is necessary
-	// This is because child classes do inherit the parent's member variables, but as menu edits the vector, it isnt reflected in order as order inherits the empty vector.
-	items = menu.getItems();
-
 	// Variable initilisation
 	savings = 0;
 	total = 0;
@@ -18,10 +14,12 @@ Order::~Order()
 
 }
 
-// Function that gets the private variable total.
-double Order::getTotal() const
+// Cleanup function to clear memory
+// Order destructor is called early, so this has to be a separate function
+void Order::Cleanup()
 {
-	return total;
+	orderItems.clear();
+	items.clear();
 }
 
 // Returns the size of orderItems

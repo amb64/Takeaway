@@ -11,8 +11,7 @@ public:
 
 	std::string toString() override;
 
-	// Get functions
-	bool getShareable() const;
+	// Get function
 	bool getTwoForOne() const;
 
 private:

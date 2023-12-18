@@ -15,16 +15,15 @@ class Menu : public ItemList
 public:
 	Menu(std::string filePath);
 	~Menu();
+	void Cleanup();
+
 	void loadFile();
 
 	// Functions for printing out the menu
 	std::string toString();
-
 	std::string toStringPlain(bool asc) const;
 
 	Item* getItem(int index, bool isRemoving, std::vector<Item*> orderItems);
-
-	std::vector<Item*> getItems();
 
 private:
 	void sortItems();

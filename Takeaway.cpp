@@ -34,7 +34,7 @@ int main()
 	Menu menu = Menu("menu.csv");
 
 	// Create an order object
-	Order order = Order(menu);
+	Order order = Order();
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
 	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
@@ -211,8 +211,14 @@ int main()
 			if (choice == "y" || choice == "Y")
 			{
 				order.printReceipt();
+
+				// Cleanup and end program
+				menu.Cleanup();
+				order.Cleanup();
 				return 0;
 			}
+			// Didnt feel the need to add 'n' as an option
+			// Even if the user cancelled checkout on accident, they can just type checkout again
 			else
 			{
 				cout << "\n\nCheckout cancelled.\nPlease select the checkout option once you are content with the contents of your order.\n\n";
@@ -237,4 +243,9 @@ int main()
 	cout << "\n";
 	cout << "Press any key to quit...";
 	std::getchar();
+
+	// Cleanup and end program
+	menu.Cleanup();
+	order.Cleanup();
+
 }

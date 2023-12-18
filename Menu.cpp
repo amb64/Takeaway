@@ -16,10 +16,18 @@ Menu::~Menu()
 
 }
 
-// Returns the items vector
-std::vector<Item*> Menu::getItems()
+// Cleanup function to clear memory
+// Menu destructor is called early, so this has to be a separate function
+void Menu::Cleanup()
 {
-	return items;
+	for (Item* item : items)
+	{
+		delete item;
+	}
+
+	items.clear();
+	ascendingItems.clear();
+	descendingItems.clear();
 }
 
 void Menu::sortItems()
@@ -203,23 +211,19 @@ void Menu::loadFile()
 			}
 		}
 
+		// Free up memory
+		itemList.clear();
+		menuList.clear();
+
 		// Close the file
 		file.close();
 	}
-
-	// Need to open the csv file
-	// Iterate through each line and get each part of the data in that line
-	// Store that data temporarily in a list
-	// Determine which kind of item object needs to be created
-	// Create the object
-	// When done reading from the file, close it and delete the variable for the file as well as the list used
 }
 
 std::string Menu::toString()
 {
 	// Function that displays the menu nicely when printed out on the screen.
 	// Organised by item type.
-	// See brief for specifics
 
 	// String that stores the text to be outputted
 	std::string output;
