@@ -8,14 +8,18 @@
 class Order: public ItemList
 {
 public:
-	Order(Menu menu);
+	Order();
 	~Order();
-	void printReceipt();
+	void Cleanup();
+
 	void add(Item* item);
 	void remove(Item* item);
+
 	std::string checkout();
+	void printReceipt();
+
 	std::string toString();
-	double getTotal() const;
+
 	std::vector<Item*> getOrderItems();
 
 private:

@@ -28,17 +28,6 @@ bool Beverage::isAlcoholic() const
 	}
 }
 
-// Get functions
-int Beverage::getVolume()
-{
-	return volume;
-}
-
-double Beverage::getAbv()
-{
-	return abv;
-}
-
 std::string Beverage::toString()
 {
 	// Override for the beverage

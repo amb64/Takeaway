@@ -8,6 +8,8 @@ Menu::Menu(std::string ifilePath)
 
 	// Sort the menu
 	sortItems();
+
+	menuType = 0;
 }
 
 // Destructor
@@ -16,10 +18,18 @@ Menu::~Menu()
 
 }
 
-// Returns the items vector
-std::vector<Item*> Menu::getItems()
+// Cleanup function to clear memory
+// Menu destructor is called early, so this has to be a separate function
+void Menu::Cleanup()
 {
-	return items;
+	for (Item* item : items)
+	{
+		delete item;
+	}
+
+	items.clear();
+	ascendingItems.clear();
+	descendingItems.clear();
 }
 
 void Menu::sortItems()
@@ -49,33 +59,52 @@ bool Menu::comparePriceD(Item* item1, Item* item2)
 	return item1->getPrice() > item2->getPrice();
 }
 
-
 // Returns a pointer to an item object based on an inputted integer
 Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 {
-	//std::cout << "\ncalled get item\n";
-
 	int orderItemsSize = orderItems.size();
 
 	Item* item;
 
 	// If:
 	// The index is less than 1
-	// If the user is adding and the index is larger than the size of the items vector
-	// If the user is removing and the index is larger than the orderItems vector
+	// The user is adding and the index is larger than the size of the items vector
+	// The user is removing and the index is larger than the orderItems vector
 	// Then there is an error in the input
 
 	// Furthermore, decimals are accepted but only the first digit is taken, e.g 1.7 becomes 1
+	// 0.x is not accepted
 
 	// Limits for integers
 
 	if (index >= 1 && (!isRemoving && index <= items.size()))
 	{
+		// Vector that holds the menu to index 
+		// This is because the menu is ordered differently when sorted in ascending or descending order
+		// Ensures that the item the user intended to add matches the last outputted menu
+		std::vector<Item*>currentMenu;
+
+		if (menuType == 0)
+		{
+			//std::cout << "normal items\n\n";
+			currentMenu = items;
+		}
+		else if (menuType == 1)
+		{
+			//std::cout << "asc items\n\n";
+			currentMenu = ascendingItems;
+		}
+		else if (menuType == 2)
+		{
+			//std::cout << "desc items\n\n";
+			currentMenu = descendingItems;
+		}
+
 		// Index offset
 		index--;
 
 		// The item in the items list
-		item = items[index];
+		item = currentMenu[index];
 
 		return item;
 	}
@@ -89,6 +118,7 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 
 		return item;
 	}
+	// Input is invalid
 	else
 	{
 		std::cout << "\nOops! Your input '" << index << "' was invalid.";
@@ -96,7 +126,6 @@ Item* Menu::getItem(int index, bool isRemoving, std::vector<Item*> orderItems)
 		return nullptr;
 	}
 }
-
 
 void Menu::loadFile()
 {
@@ -203,23 +232,21 @@ void Menu::loadFile()
 			}
 		}
 
+		// Free up memory
+		itemList.clear();
+		menuList.clear();
+
 		// Close the file
 		file.close();
 	}
-
-	// Need to open the csv file
-	// Iterate through each line and get each part of the data in that line
-	// Store that data temporarily in a list
-	// Determine which kind of item object needs to be created
-	// Create the object
-	// When done reading from the file, close it and delete the variable for the file as well as the list used
 }
 
 std::string Menu::toString()
 {
+	menuType = 0;
+
 	// Function that displays the menu nicely when printed out on the screen.
 	// Organised by item type.
-	// See brief for specifics
 
 	// String that stores the text to be outputted
 	std::string output;
@@ -233,7 +260,9 @@ std::string Menu::toString()
 	// Then it displays the next message and continues through the loop.
 	// This is done under the assumption that the menu.csv file will always be ordered appetisers -> main courses -> beverages
 
-	for (size_t i = 0; i < items.size(); i++)
+	auto size = items.size();
+
+	for (size_t i = 0; i < size; i++)
 	{
 		if (i > 0 && typeid(*items[i]) != typeid(*previousItem))
 		{
@@ -258,7 +287,7 @@ std::string Menu::toString()
 }
 
 // A seperate implementation of the to string function that removes the formatting as the menu has been sorted
-std::string Menu::toStringPlain(bool asc) const
+std::string Menu::toStringPlain(bool asc)
 {
 	std::vector<Item*> menu;
 	std::string output;
@@ -268,21 +297,24 @@ std::string Menu::toStringPlain(bool asc) const
 	// If the ascending bool is true, print out ascending items
 	if (asc)
 	{
+		menuType = 1;
 		menu = ascendingItems;
 		output += "Ascending";
 	}
 	// Otherwise, descending items
 	else
 	{
+		menuType = 2;
 		menu = descendingItems;
 		output += "Descending";
 	}
 	output += "----------\n";
 
 	// Add them to the output variable
-	for (size_t i = 0; i < menu.size(); i++)
+	auto size = menu.size();
+	for (size_t i = 0; i < size; i++)
 	{
-		output += menu[i]->toString();
+		output += "(" + std::to_string(i + 1) + ") " + menu[i]->toString();
 	}
 
 	output += "\n\n";

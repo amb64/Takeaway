@@ -34,10 +34,10 @@ int main()
 	Menu menu = Menu("menu.csv");
 
 	// Create an order object
-	Order order = Order(menu);
+	Order order = Order();
 
 	cout << "==========Takeaway Ordering Program==========\n\n";
-	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+	cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nWhen adding items, please use the corresponding number from the most recently outputted menu,\notherwise your order may not be what you expected.\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 
 	while (userCommand != "exit")
 	{
@@ -61,18 +61,20 @@ int main()
 
 		if (command.compare("menu") == 0) 
 		{
+			string param = parameters[1];
+
 			// Check if the user entered an additional letter after menu
-			if (parameters[1].empty() || parameters[1].find_first_not_of(" ") == std::string::npos)
+			if (param.empty() || param.find_first_not_of(" ") == std::string::npos)
 			{
 				// Output the regular menu
 				cout << menu.toString();
 			}
-			else if (parameters[1] == "a")
+			else if (param == "a")
 			{
 				// Ascending menu
 				cout << menu.toStringPlain(true);
 			}
-			else if (parameters[1] == "d")
+			else if (param == "d")
 			{
 				// Descending menu
 				cout << menu.toStringPlain(false);
@@ -83,13 +85,21 @@ int main()
 				cout << "\nOops! Your input '" << parameters[1] << "' was invalid.\n\n";
 			}
 		}
+		// Simply displays the user's order, added because felt it was needed
+		else if (command.compare("order") == 0)
+		{
+			cout << order.toString();
+		}
 		else if (command.compare("add") == 0)
 		{
 			// Iterating through the parameters vector (for each item the user wishes to add to their order)
-			for (int i = 1; i < (parameters.size() - 1); i++)
+			auto size = (parameters.size() - 1);
+			for (int i = 1; i < size; i++)
 			{
+				string param = parameters[i];
+
 				// Check if the parameter is empty
-				if (i >= parameters.size() || parameters[i].empty() || parameters[i].find_first_not_of(" ") == std::string::npos)
+				if (i >= size || param.empty() || param.find_first_not_of(" ") == std::string::npos)
 				{
 					//cout << "current parameter is EMPTY!!";
 					continue;
@@ -103,7 +113,7 @@ int main()
 				{
 					// Cast the corresponding element in the vector to an int
 					// If the user types a decimal, it is rounded down / only the first digit is registered
-					index = stoi(parameters[i]);
+					index = stoi(param);
 
 					// Pointer to the item to add to the menu
 					Item* choice;
@@ -123,12 +133,12 @@ int main()
 				// If the current elemt cant be cast to an integer, it must not be a number
 				catch(const invalid_argument&)
 				{
-					cout << "\nOops! Your input '" << parameters[i] <<  "' was invalid.";
+					cout << "\nOops! Your input '" << param <<  "' was invalid.";
 				}
 				// If the number is out of range of the limits for an integer, notify the user
 				catch (const out_of_range&)
 				{
-					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
+					cout << "\nOops! Your input '" << param << "' was invalid.";
 				}
 			}
 
@@ -142,9 +152,11 @@ int main()
 			vector<int> itemsToRemove;
 
 			// Iterating through the parameters vector (for each item the user wishes to add to their order)
-			for (int i = 1; i < (parameters.size() - 1); i++)
+			auto size = (parameters.size() - 1);
+			for (int i = 1; i < size; i++)
 			{
-				if (i >= parameters.size() || parameters[i].empty() || parameters[i].find_first_not_of(" ") == std::string::npos)
+				string param = parameters[i];
+				if (i >= size || param.empty() || param.find_first_not_of(" ") == std::string::npos)
 				{
 					//cout << "current parameter is EMPTY!!";
 					continue;
@@ -154,29 +166,34 @@ int main()
 				// If the user types a decimal, it is rounded down / only the first digit is registered
 				try
 				{
-					itemsToRemove.push_back(stoi(parameters[i]));
+					itemsToRemove.push_back(stoi(param));
 				}
 				// If that doesnt work, the input must be invalid
 				catch (const invalid_argument&)
 				{
-					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
+					cout << "\nOops! Your input '" << param << "' was invalid.";
 				}
 				// If the number is out of range of the limits for an integer, notify the user
 				catch(const out_of_range&)
 				{
-					cout << "\nOops! Your input '" << parameters[i] << "' was invalid.";
+					cout << "\nOops! Your input '" << param << "' was invalid.";
 				}
 			}
 			
 			// The following code works even if the user inputted "remove banana -1" or something because the itemsToRemove list would be empty, and therefore the loop would not trigger at all
 			
-			// Sorting the vector in ascending order
+			// Sorting the vector in ascending order and the removing duplicates
 			sort(itemsToRemove.begin(), itemsToRemove.end());
+			auto dupes = unique(itemsToRemove.begin(), itemsToRemove.end());
+			itemsToRemove.erase(dupes, itemsToRemove.end());
+			size = (itemsToRemove.size() - 1);
 
 			// Iterating through the items in the itemsToRemove vector- but backwards as during this the size of the orderItems vector changes.
 			// So we want to always remove the last item first!
-			for (int i = (itemsToRemove.size() - 1); i >= 0; i--)
+			for (int i = size; i >= 0; i--)
 			{
+				auto itemToRemove = itemsToRemove[i];
+
 				// Pointer to the item to remove from the order
 				Item* choice;
 
@@ -184,7 +201,7 @@ int main()
 				vector<Item*> orderItems = order.getOrderItems();
 
 				// Getting the corresponding item pointer for the selected order object
-				choice = menu.getItem(itemsToRemove[i], true, orderItems);
+				choice = menu.getItem(itemToRemove, true, orderItems);
 
 				// If the pointer is not null, add it to the order and display the order
 				if (choice != nullptr)
@@ -194,7 +211,7 @@ int main()
 			}
 
 			// Outputs their order
-			cout << "\n\nYour order has been updated, and any valid items have been removed!\n";
+			cout << "\n\nYour order has been updated, and any valid items have been removed!\n(Duplicate inputs were not actioned)\n";
 			cout << order.toString();
 		}
 		else if (command.compare("checkout") == 0)
@@ -202,20 +219,32 @@ int main()
 			// The receipt does NOT display £ correctly. Wanted to fix this but it is not an easy fix as Order's toString function is not where £s are added,
 			// they are added in the toString methods for the Item class and its child classes.
 
-			string choice;
-
 			cout << order.checkout();
-			cin >> choice;
 
-			// If they type y, print out the receipt, otherwise checkout is cancelled
-			if (choice == "y" || choice == "Y")
+			while (true)
 			{
-				order.printReceipt();
-				return 0;
-			}
-			else
-			{
-				cout << "\n\nCheckout cancelled.\nPlease select the checkout option once you are content with the contents of your order.\n\n";
+				string choice;
+				cin >> choice;
+
+				// If they type y, print out the receipt, otherwise checkout is cancelled
+				if (choice == "y" || choice == "Y")
+				{
+					order.printReceipt();
+
+					// Cleanup and end program
+					menu.Cleanup();
+					order.Cleanup();
+					return 0;
+				}
+				else if (choice == "n" || choice == "N")
+				{
+					cout << "\nCheckout cancelled.\nPlease select the checkout option once you are satisfied with the contents of your order.\n\n";
+					break;
+				}
+				else
+				{
+					cout << "\nInvalid input.\nPlease type 'y' to confirm your order, or 'n' to cancel it.\n\n";
+				}
 			}
 
 			// Clearing the new line character from the getline to do with the user command, ensures that the "invalid input" message in the "else" section of comparing the commands does not trigger
@@ -223,12 +252,12 @@ int main()
 		}
 		else if (command.compare("help") == 0)
 		{
-			cout << "-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) checkout - Checkout your order.\n(5) help - Displays this menu.\n(6) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
+			cout << "\n-----Help Commands-----\nSelect an option by typing the corresponding keyword.\n(1) menu - Displays the food menu.\n(2) add - Add an item to your order.\n(3) remove - Remove an item from your order.\n(4) order - Displays your order. \n(5) checkout - Checkout your order.\n(6) help - Displays this menu.\n(7) exit - Exits the program.\n\nType an 'a' or 'd' after menu to sort in ascending or descending order.\nE.g menu a\n\nTo add and remove objects, type the command and then the items you wish to add / remove seperated by a space.\nE.g: add 1 2 3\n\nWhen adding items, please use the corresponding number from the most recently outputted menu,\notherwise your order may not be what you expected.\n\nREMEMBER: Commands are CaSe SeNsItIvE\n---------------------\n\n";
 		}
 		// Added this, ensures that the user knows their input was invalid but also this if makes sure this message doesnt print when the user wants to exit the program
 		else if (command.compare("exit") != 0)
 		{
-			cout << "\n\nInvalid input.\nPlease type in a valid command.\nRemember, commands are case sensitive.\nNeed help? Type 'help'.\n\n";
+			cout << "\nInvalid input.\nPlease type in a valid command.\nRemember, commands are case sensitive.\nNeed help? Type 'help'.\n\n";
 		}
 
 		parameters.clear();
@@ -237,4 +266,9 @@ int main()
 	cout << "\n";
 	cout << "Press any key to quit...";
 	std::getchar();
+
+	// Cleanup and end program
+	menu.Cleanup();
+	order.Cleanup();
+
 }

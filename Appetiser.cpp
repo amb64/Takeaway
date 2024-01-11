@@ -14,12 +14,6 @@ Appetiser::~Appetiser()
 
 }
 
-// Get functions
-bool Appetiser::getShareable() const
-{
-	return shareable;
-}
-
 bool Appetiser::getTwoForOne() const
 {
 	return twoForOne;
