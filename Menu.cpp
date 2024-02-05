@@ -260,7 +260,9 @@ std::string Menu::toString()
 	// Then it displays the next message and continues through the loop.
 	// This is done under the assumption that the menu.csv file will always be ordered appetisers -> main courses -> beverages
 
-	for (size_t i = 0; i < items.size(); i++)
+	auto size = items.size();
+
+	for (size_t i = 0; i < size; i++)
 	{
 		if (i > 0 && typeid(*items[i]) != typeid(*previousItem))
 		{
@@ -309,7 +311,8 @@ std::string Menu::toStringPlain(bool asc)
 	output += "----------\n";
 
 	// Add them to the output variable
-	for (size_t i = 0; i < menu.size(); i++)
+	auto size = menu.size();
+	for (size_t i = 0; i < size; i++)
 	{
 		output += "(" + std::to_string(i + 1) + ") " + menu[i]->toString();
 	}
